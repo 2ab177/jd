@@ -15,10 +15,14 @@
 /**
  * Remove the margin in all browsers.
  */
-
+a{
+  text-decoration: none;
+}
 body {
   margin: 0;
   max-width: 1080px;
+  min-width: 320px;
+  margin:0 auto;
 }
 
 /**

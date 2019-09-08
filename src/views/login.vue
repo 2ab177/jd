@@ -15,6 +15,12 @@
       <a href="javascript:;">短信验证码登录</a>
       <a href="javascript:;">手机快速注册</a>
     </div>
+    <div class="qqlogin">
+      <span>其他登录方式</span>
+      <img src="../assets/icon/qq.png" alt="">
+      <p>QQ</p>
+      <p>登录即代表您同意<a href="javascript:;">京东隐私政策</a></p>
+    </div>
   </div>
 </template>
 <script>
@@ -40,7 +46,7 @@ export default {
     left: 0;
     width: 1.5rem;
     height: 1.5rem;
-    background: url('../assets/download.png') no-repeat;
+    background: url('../assets/back.png') no-repeat;
     background-size: 120%;
   }
   .uname{
@@ -89,5 +95,49 @@ export default {
     border: 1px solid #ff2000;
     background: transparent;
     color: #f23030;
+  }
+  .dxsj{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  .dxsj>a{
+    color: #999;
+    font-size: .9rem;
+  }
+  .qqlogin{
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #efefef;
+    position: relative;
+  }
+  .qqlogin>img{
+    width: 48px;
+    height: 48px;
+  }
+  .qqlogin>img+p{
+    margin: 0;
+    color: #999;
+  }
+  .qqlogin>img+p+p{
+    margin-top: 2rem;
+    font-size: .9rem;
+    color: #bebebe;
+  }
+  .qqlogin>img+p+p>a{
+    color: #409eff;
+  }
+  .qqlogin>span{
+    display: block;
+    font-size: .9rem;
+    color: #ccc;
+    position: absolute;
+    left: 50%;
+    top: -0.6rem;
+    margin-left: -3.5rem;
+    z-index: 999;
+    padding:0 .8rem;
+    background: #fff;
   }
 </style>
