@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel">
+  <div class="carou">
     <swiper :options="swiperOption" class="swiper-wrap" ref="mySwiper">
       <swiper-slide>
         <img src="../assets/lunbo/cal-1.jpg" alt />
@@ -47,6 +47,9 @@ export default {
           delay:3000,
           disableOnInteraction:false,
         },
+        loop:true,
+        observer:true,
+        observeParents:true,
       }
     };
   },
@@ -62,12 +65,17 @@ export default {
   mounted() {
     // current swiper instance
     // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-    this.swiper.slideTo(0, 1000, false);
+    this.swiper.slideTo(1, 1000, false);
   }
 };
 </script>
 <style>
-  .carousel img{
+  .carou{
+    border-radius: .3rem;
+    transform: translateY(0);
+    overflow: hidden;
+  }
+  .carou img{
     width:100%;
     display: block;
   }

@@ -11,9 +11,7 @@
     <!-- 商品导航列表 -->
     <div class="container">
       <!-- 轮播图 -->
-      <div class="carousel">
-        <carousel></carousel>
-      </div>
+      <carousel></carousel>
       <!-- 中部 -->
       <div class="list">
         <div class="list-item">
@@ -73,8 +71,9 @@
       </div>
       <!-- 京东秒杀 -->
       <div class="jdms">
+        <div>
           <div>
-            <img src="../assets/miaosha/jdms.png">
+            <span></span>
             <span>18点场</span>
             <div class="djs">
               <span class="number">00</span>
@@ -85,6 +84,26 @@
             </div>
           </div>
           <a href="javascript:;">更多秒杀</a>
+        </div>
+        <div class="mslist">
+          <ul>
+            <li>
+              <img src="../assets/miaosha/ms1.jpg" alt="">
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms2.jpg" alt="">
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms3.jpg" alt="">
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms4.jpg" alt="">
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms5.jpg" alt="">
+            </li>
+          </ul>
+        </div> 
       </div>
     </div>
   </div>
@@ -150,25 +169,18 @@ export default {
   }
   .input>a{
     display: block;
-    width: 100%;
-    height: 100%;
     box-sizing: border-box;
     outline: none;
     border: none;
     background: url('../assets/jdsearch.png') #f7f7f7 no-repeat;
     background-size: 62px;
-    background-position: 9px 6px;
+    background-position: 9px 5px;
+    padding: .3rem 0;
     padding-left: 5rem;
     border-radius: 0.9rem;
     text-align: left;
-    padding-top:.35rem;
     color: #333;
     font-size: .9rem;
-  }
-  /* 轮播图 */
-  .carousel{
-    border-radius: .3rem;
-    overflow: hidden;
   }
   /* 商品详情列表 */
   .list{
@@ -204,22 +216,30 @@ export default {
   }
   /* 京东秒杀 */
   .jdms{
+    padding: .5rem;
+    border-radius: .3rem;
+    background: url('../assets/miaosha/miaotiao.png') #fff no-repeat;
+    background-size: 100%;
+  }
+  .jdms>div:first-child{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .5rem;
-    background: url('../assets/miaosha/miaotiao.png') #fff no-repeat;
-    background-size: 100%;
-    border-radius: .3rem;
   }
-  .jdms>div{
+  .jdms>div>div{
     display: flex;
+    align-items: center;
   }
-  .jdms>div>img{
-    width: 32%;
+  .jdms>div>div>span:first-child{
+    display: inline-block;
+    background: url('../assets/miaosha/jdms.png') no-repeat;
+    width: 3.45rem;
+    height: 1.35rem;
     margin-right: .4rem; 
+    background-size: contain ;
+    background-position: 0 center;
   }
-  .jdms>div>span:nth-child(2){
+  .jdms>div>div>span:nth-child(2){
     font-weight: 1000;
     font-size: .8rem;
     margin-right: .4rem; 
@@ -228,9 +248,8 @@ export default {
     font-size: .8rem;
     display: inline-block;
     border: 1px solid #dfdfdf;
-    padding-top: 1px;
   }
-  .jdms>a{
+  .jdms a{
     display: block;
     font-size: .7rem;
     padding-right: 1rem;
@@ -238,5 +257,16 @@ export default {
     background-position: right;
     background-size: .8rem;
     color: #e93b3d;;
+  }
+  .mslist>ul{
+    display: flex;
+    padding: 0;
+  }
+  .mslist>ul>li{
+    width: 20%;
+  }
+  .mslist>ul>li>img{
+    display: block;
+    width: 100%;
   }
 </style>
