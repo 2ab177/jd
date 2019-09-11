@@ -1,12 +1,10 @@
 <template>
-  <div class="container_fill">
+  <div>
     <!-- 上方搜索框 -->
     <div class="top_input">
       <span></span>
       <div class="input">
-        <div>
-          <input type="text" placeholder="dell显示器">
-        </div>
+        <a href="javascript:;">dell显示器</a>
       </div>
       <a href="javascript:;">登录</a> 
     </div>
@@ -74,8 +72,7 @@
         </div>
       </div>
       <!-- 京东秒杀 -->
-      <div class="jdms_out">
-        <div class="jdms">
+      <div class="jdms">
           <div>
             <img src="../assets/miaosha/jdms.png">
             <span>18点场</span>
@@ -88,7 +85,6 @@
             </div>
           </div>
           <a href="javascript:;">更多秒杀</a>
-        </div>
       </div>
     </div>
   </div>
@@ -102,14 +98,11 @@ export default {
 }
 </script>
 <style scoped>
-.container_fill{
-  background: #f6f6f6;
-}
   /* 主要内容容器 */
   .container{
     padding: 0 2.5%;
     padding-top: 45px;
-    background: url('../assets/bg.jpg') no-repeat;
+    background: url('../assets/bg.jpg') #f6f6f6 no-repeat;
     background-position: center center;
     background-size: cover;      
   }
@@ -146,13 +139,6 @@ export default {
     padding: 0 2.8rem;
     z-index: 0;
   }
-  .input>div{
-    width: 100%;
-    height: 100%;
-    background:#f7f7f7;
-    border-radius: 0.9rem;
-    overflow: hidden;
-  }
   .dl{
     width: 40px;
     height: 44px;
@@ -162,16 +148,22 @@ export default {
     width: 20px;
     height: 20px;
   }
-  .input>div>input{
+  .input>a{
+    display: block;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     outline: none;
     border: none;
-    background: url('../assets/jdsearch.png') no-repeat;
+    background: url('../assets/jdsearch.png') #f7f7f7 no-repeat;
     background-size: 62px;
     background-position: 9px 6px;
     padding-left: 5rem;
+    border-radius: 0.9rem;
+    text-align: left;
+    padding-top:.35rem;
+    color: #333;
+    font-size: .9rem;
   }
   /* 轮播图 */
   .carousel{
@@ -216,8 +208,9 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: .5rem;
-    background: url('../assets/miaosha/miaotiao.png') no-repeat;
+    background: url('../assets/miaosha/miaotiao.png') #fff no-repeat;
     background-size: 100%;
+    border-radius: .3rem;
   }
   .jdms>div{
     display: flex;
@@ -245,9 +238,5 @@ export default {
     background-position: right;
     background-size: .8rem;
     color: #e93b3d;;
-  }
-  .jdms_out{
-    background: #fff;
-    border-radius: .3rem;
   }
 </style>
