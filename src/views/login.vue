@@ -4,12 +4,12 @@
       <span class="back"></span>
       <p>京东登录</p>
     </div>
-    <input class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
+    <input v-model="uname" class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
     <div class="pwd">
-      <input type="password" placeholder="请输入密码">
+      <input v-model="upwd" type="password" placeholder="请输入密码">
       <a href="">忘记密码</a>
     </div>
-    <a href="javascript:;" class="btn">登录</a>
+    <a href="javascript:;" class="btn" @click="login">登录</a>
     <a href="javascript:;" class="btn">一键登录</a>
     <div class="dxsj">
       <a href="javascript:;">短信验证码登录</a>
@@ -25,7 +25,17 @@
 </template>
 <script>
 export default {
-  
+  data(){
+    return {
+      uname:"",
+      upwd:""
+    }
+  },
+  methods:{
+    login(){
+      
+    },
+  }
 }
 </script>
 <style scoped>

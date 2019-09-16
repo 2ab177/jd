@@ -7,10 +7,6 @@ const session = require("express-session");
 const cors = require("cors");
 const mysql = require("mysql");
 const bodyParser = require('body-parser');
-//使用body-parser中间件
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 //3:创建数据库连接池
 var pool = mysql.createPool({
    host:"127.0.0.1",
@@ -21,9 +17,13 @@ var pool = mysql.createPool({
    database:"jd"
 })
 
-//4:创建web服务器监听 8080 端口
+//4:创建web服务器监听 5050 端口
 var server = express();
 server.listen(5050);
+//使用body-parser中间件
+server.use(bodyParser.urlencoded({
+  extended: false
+}));
 //5:处理跨域 cors 
 //5.1：配置允许访问程序地址(脚手架)
 //     http://127.0.0.1:5050  (ok)
