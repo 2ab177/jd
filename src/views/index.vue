@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index">
     <!-- app推广 -->
     <div class="app_tg">
       <div>
@@ -91,97 +91,115 @@
             </a>
           </div>
         </div>
-        <!-- 京东秒杀 -->
-        <div class="jdms">
+      </div>
+    </div>
+    <div class="bottom_pro">
+      <!-- 京东秒杀 -->
+      <div class="jdms">
+        <div>
           <div>
-            <div>
-              <span></span>
-              <span>18点场</span>
-              <div class="djs">
-                <span class="number">00</span>
-                <span>:</span>
-                <span class="number">42</span>
-                <span>:</span>
-                <span class="number">50</span>
-              </div>
+            <span></span>
+            <span>18点场</span>
+            <div class="djs">
+              <span class="number">00</span>
+              <span>:</span>
+              <span class="number">42</span>
+              <span>:</span>
+              <span class="number">50</span>
             </div>
-            <a href="javascript:;">更多秒杀</a>
           </div>
-          <div class="mslist">
-            <ul>
-              <li>
-                <img src="../assets/miaosha/ms1.jpg" alt />
-                <span>
-                  <span>￥</span>279
-                </span>
-                <s>
-                  <span>￥</span>299
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms2.jpg" alt />
-                <span>
-                  <span>￥</span>1279
-                </span>
-                <s>
-                  <span>￥</span>1399
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms3.jpg" alt />
-                <span>
-                  <span>￥</span>159
-                </span>
-                <s>
-                  <span>￥</span>129
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms4.jpg" alt />
-                <span>
-                  <span>￥</span>559
-                </span>
-                <s>
-                  <span>￥</span>466
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms5.jpg" alt />
-                <span>
-                  <span>￥</span>59
-                </span>
-                <s>
-                  <span>￥</span>100
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms6.png" alt />
-                <span>
-                  <span>￥</span>79
-                </span>
-                <s>
-                  <span>￥</span>89
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms7.jpg" alt />
-                <span>
-                  <span>￥</span>69
-                </span>
-                <s>
-                  <span>￥</span>99
-                </s>
-              </li>
-              <li>
-                <img src="../assets/miaosha/ms8.png" alt />
-                <span>
-                  <span>￥</span>366
-                </span>
-                <s>
-                  <span>￥</span>315
-                </s>
-              </li>
-            </ul>
+          <a href="javascript:;">更多秒杀</a>
+        </div>
+        <div class="mslist">
+          <ul>
+            <li>
+              <img src="../assets/miaosha/ms1.jpg" alt />
+              <span>
+                <span>￥</span>279
+              </span>
+              <s>
+                <span>￥</span>299
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms2.jpg" alt />
+              <span>
+                <span>￥</span>1279
+              </span>
+              <s>
+                <span>￥</span>1399
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms3.jpg" alt />
+              <span>
+                <span>￥</span>159
+              </span>
+              <s>
+                <span>￥</span>129
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms4.jpg" alt />
+              <span>
+                <span>￥</span>559
+              </span>
+              <s>
+                <span>￥</span>466
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms5.jpg" alt />
+              <span>
+                <span>￥</span>59
+              </span>
+              <s>
+                <span>￥</span>100
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms6.png" alt />
+              <span>
+                <span>￥</span>79
+              </span>
+              <s>
+                <span>￥</span>89
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms7.jpg" alt />
+              <span>
+                <span>￥</span>69
+              </span>
+              <s>
+                <span>￥</span>99
+              </s>
+            </li>
+            <li>
+              <img src="../assets/miaosha/ms8.png" alt />
+              <span>
+                <span>￥</span>366
+              </span>
+              <s>
+                <span>￥</span>315
+              </s>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 东家小院 -->
+      <div class="djxy">
+        <img src="../assets/djxy/e1af43a6ea0cb5f.png" />
+        <div class="djxy_top">
+          <div>
+            <span>串门好礼</span>
+            <span>带着好礼走亲戚</span>
+            <img src="../assets/djxy/djxy1.jpg" alt="">
+            <img src="../assets/djxy/djxy2.jpg" alt="">
+          </div>
+          <div>
+            <span>安全出游</span>
+            <span>带着好礼走亲戚</span>
           </div>
         </div>
       </div>
@@ -191,10 +209,10 @@
 <script>
 import carousel from "../components/carousel";
 export default {
-  data(){
+  data() {
     return {
-      fixed:false
-    }
+      fixed: false
+    };
   },
   components: {
     carousel
@@ -204,31 +222,52 @@ export default {
   },
   methods: {
     handleScroll: function() {
-      var sTop=document.documentElement.scrollTop || document.body.scrollTop;
-      if(sTop>=32){
-        this.fixed=true;
-      }else{
-        this.fixed=false;
+      var sTop = document.documentElement.scrollTop || document.body.scrollTop;
+      if (sTop >= 32) {
+        this.fixed = true;
+      } else {
+        this.fixed = false;
       }
     },
-    scroll2:function(){
-      var sTop=document.documentElement.scrollTop || document.body.scrollTop;
-      if(sTop>0){
-        this.fixed=true;
-      }else{
-        this.fixed=false;
+    scroll2: function() {
+      var sTop = document.documentElement.scrollTop || document.body.scrollTop;
+      if (sTop > 0) {
+        this.fixed = true;
+      } else {
+        this.fixed = false;
       }
     },
-    offApptg(){
+    offApptg() {
       window.removeEventListener("scroll", this.handleScroll);
-      var appTg=document.getElementsByClassName("app_tg")[0];
+      var appTg = document.getElementsByClassName("app_tg")[0];
       appTg.remove();
       window.addEventListener("scroll", this.scroll2);
     }
-  },
+  }
 };
 </script>
 <style scoped>
+.bottom_pro{
+  padding: 0 2.5%;
+}
+/* 主页背景 */
+.index{
+  background: #f6f6f6;
+}
+/* 东家小院 */
+.djxy_top>div>span{
+  display: block;
+}
+.djxy_top>div>img{
+  width: 50%;
+}
+.djxy>img{
+  width: 100%;
+}
+.djxy>div{
+  box-sizing: border-box;
+  width: 50%;
+}
 /* app推广 */
 .app_tg {
   display: flex;
@@ -274,17 +313,17 @@ export default {
 }
 /* 主要内容容器 */
 .container {
-  background: url("../assets/bg.jpg") #f6f6f6 no-repeat;
+  background: url("../assets/bg.jpg")  no-repeat;
   background-position: center center;
   background-size: cover;
 }
 .container > div:nth-child(2) {
-  padding: 0 2.5%;
+  padding: 0 2.5% .2rem;
 }
 /* 上方搜索框 */
-.input_fixed{
+.input_fixed {
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   background: #cd2525;
 }
