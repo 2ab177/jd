@@ -190,6 +190,7 @@
       <!-- 东家小院 -->
       <div class="djxy">
         <img src="../assets/djxy/e1af43a6ea0cb5f.png" />
+        <!-- 上部 -->
         <div class="djxy_top">
           <div>
             <span>串门好礼</span>
@@ -200,6 +201,25 @@
           <div>
             <span>安全出游</span>
             <span>带着好礼走亲戚</span>
+            <img src="../assets/djxy/djxy3.jpg" alt="">
+            <img src="../assets/djxy/djxy4.jpg" alt="">
+          </div>
+        </div>
+        <!-- 下部 -->
+        <div class="djxy_bottom">
+          <div>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      <!-- 每日逛 -->
+      <div class="mrg">
+        <img src="../assets/mrg/mrg.png" alt="">
+        <div>
+          <div>
+            <span>免息星期</span>
+            <span>白条面息购</span>
+            <img src="../assets/mrg/mrg1.jpg" alt="">
           </div>
         </div>
       </div>
@@ -255,18 +275,46 @@ export default {
   background: #f6f6f6;
 }
 /* 东家小院 */
+.djxy_top>div>span:first-child{
+  background: linear-gradient(90deg, #45CAFF,#00f);
+  font-weight: 900;
+  color: transparent;
+  -webkit-background-clip: text;
+}
+.djxy_top>div>span:nth-child(2){
+  font-size: .7rem;
+}
+.djxy_top>div:first-child{
+  border-radius: .3rem 0 0 0;
+  border-right:.05rem solid #f6f6f6;
+  border-bottom: .1rem solid #f6f6f6;
+}
+.djxy_top>div:nth-child(2){
+  border-radius: 0 .3rem 0 0;
+  border-left:.05rem solid #f6f6f6;
+  border-bottom: .1rem solid #f6f6f6;
+}
+.djxy_top>div{
+  text-align: left;
+  width: 50%;
+  background: #fff;
+  padding:.8% 2% 2%;
+}
+.djxy_top{
+  display: flex;
+}
 .djxy_top>div>span{
   display: block;
 }
 .djxy_top>div>img{
-  width: 50%;
+  width: 42%;
+  margin: 4% 4% 0;
 }
 .djxy>img{
   width: 100%;
 }
-.djxy>div{
+.djxy div{
   box-sizing: border-box;
-  width: 50%;
 }
 /* app推广 */
 .app_tg {
@@ -316,6 +364,8 @@ export default {
   background: url("../assets/bg.jpg")  no-repeat;
   background-position: center center;
   background-size: cover;
+  overflow: hidden;
+  border-radius: 0 0 .2rem .2rem;
 }
 .container > div:nth-child(2) {
   padding: 0 2.5% .2rem;
@@ -418,6 +468,7 @@ export default {
   border-radius: 0.3rem;
   background: url("../assets/miaosha/miaotiao.png") #fff no-repeat;
   background-size: 100%;
+  margin-top: 0.5rem;
 }
 .jdms > div:first-child {
   display: flex;
