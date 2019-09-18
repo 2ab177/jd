@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import { Button } from 'vant';
+import { Button,DatetimePicker,Popup } from 'vant';
+Vue.use(DatetimePicker);
+Vue.use(Popup);
 Vue.use(Button);
 axios.defaults.baseURL = "http://127.0.0.1:5050"
 Vue.prototype.axios = axios;

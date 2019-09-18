@@ -60,11 +60,26 @@ CREATE TABLE jd_cart(
 (255),
   uid    INT
 );
-
+/**每日逛**/
+CREATE TABLE jd_mrg(
+  gid INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(10),
+  details VARCHAR(12),
+  mrgimg VARCHAR(128)
+);
 /*******************/
 /******数据导入******/
 /*******************/
 /**商品列表**/
+INSERT INTO jd_mrg VALUES(null,'免息星球','白条免息购','../assets/mrg/mrg1.jpg'),
+(null,'品牌闪购','享品质好物','../assets/mrg/mrg2.png'),
+(null,'品牌秒杀','低价抢大牌','../assets/mrg/mrg3.png'),
+(null,'京东直播','边看边买','../assets/mrg/mrg4.png'),
+(null,'排行榜','热销推荐','../assets/mrg/mrg5.png'),
+(null,'拍拍好物','二手优品','../assets/mrg/mrg6.jpg'),
+(null,'新品首发','vivo X27','../assets/mrg/mrg7.jpg'),
+(null,'发现好货','发现品质生活','../assets/mrg/mrg8.png');
+
 INSERT INTO jd_product
 VALUES(null, '../assets/wntj/1_sm.jpg', '../assets/wntj/1_lg.jpg', '../assets/zy.png', 3988.00, 3888.00, '闪购', '【京东旗舰店+华为官方直供：全国联保+多重好礼(可联系客服折现)】【赠：10000毫安移动电源+真无线双耳蓝牙耳机+高品质运动手环等好礼】华为P30pro', '华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)'),
   (null, '../assets/wntj/2_sm.jpg', '../assets/wntj/2_lg.jpg', '../assets/jdjx.png', 1999.00, 1899.00, '新品', '限时特惠300元！成交价1999！屏下摄像头，骁龙710，后置三摄！Note10系列正式预售！预定即享白条6期免息》', '三星 Galaxy A8s 全面屏手机 6GB+128GB 极光黑 全网通 双卡双待 4G手机 自营'),

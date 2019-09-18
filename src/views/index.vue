@@ -208,21 +208,76 @@
         <!-- 下部 -->
         <div class="djxy_bottom">
           <div>
-            <span></span>
+            <span>浴上安全</span>
+            <span>安全沐浴</span>
+            <img src="../assets/djxy/djxy5.jpg" alt="">
+          </div>
+          <div>
+            <span>畅玩人生</span>
+            <span>任天堂索尼</span>
+            <img src="../assets/djxy/djxy6.jpg" alt="">
+          </div>
+          <div>
+            <span>初夏出游</span>
+            <span>给心灵放假</span>
+            <img src="../assets/djxy/djxy7.jpg" alt="">
+          </div>
+          <div>
+            <span>铁骑纵横</span>
+            <span>铁骑天下行</span>
+            <img src="../assets/djxy/djxy8.jpg" alt="">
           </div>
         </div>
       </div>
       <!-- 每日逛 -->
       <div class="mrg">
         <img src="../assets/mrg/mrg.png" alt="">
-        <div>
+        <div class="mrg-top">
           <div>
             <span>免息星期</span>
             <span>白条面息购</span>
             <img src="../assets/mrg/mrg1.jpg" alt="">
           </div>
+          <div>
+            <span>品牌闪购</span>
+            <span>购大牌好物</span>
+            <img src="../assets/mrg/mrg2.png" alt="">
+          </div>
+          <div>
+            <span>品牌秒杀</span>
+            <span>低价抢大牌</span>
+            <img src="../assets/mrg/mrg3.png" alt="">
+          </div>
+          <div>
+            <span>京东直播</span>
+            <span>边看边买</span>
+            <img src="../assets/mrg/mrg4.png" alt="">
+          </div>
+        </div>
+        <div class="mrg-bottom">
+          <div>
+            <span>排行榜</span>
+            <span>热销推荐</span>
+            <img src="../assets/mrg/mrg5.png" alt="">
+          </div>
+          <div>
+            <span>拍拍好物</span>
+            <span>购大牌好物</span>
+            <img src="../assets/mrg/mrg6.jpg" alt="">
+          </div>
+          <div>
+            <span>品牌秒杀</span>
+            <span>低价抢大牌</span>
+            <img src="../assets/mrg/mrg7.jpg" alt="">
+          </div>
+          <div>
+            <span>京东直播</span>
+            <span>边看边买</span>
+            <img src="../assets/mrg/mrg8.png" alt="">
+          </div>
         </div>
       </div>
+      <!-- 京东快报 -->
     </div>
   </div>
 </template>
@@ -270,11 +325,68 @@ export default {
 .bottom_pro{
   padding: 0 2.5%;
 }
+/* 每日逛文字&圆角 */
+.mrg-top{
+  border-radius: .3rem .3rem 0 0;
+  overflow: hidden;
+}
+.mrg-bottom{
+  border-radius:0 0 .3rem .3rem ;
+  overflow: hidden;
+}
+.mrg>div>div>span:first-child{
+  font-weight: 800;
+  background: linear-gradient(90deg, #FF2A2A,#F139D2);
+  color: transparent;
+  -webkit-background-clip: text;
+}
+.mrg>div>div>span:nth-child(2){
+  font-size: .7rem;
+}
 /* 主页背景 */
 .index{
   background: #f6f6f6;
 }
-/* 东家小院 */
+/* 东家小院&每日逛 */
+/* .djxy_bottom>div:last-child{
+  border-radius: 0 0 .3rem 0;
+  overflow: hidden;
+}
+.djxy_bottom>div:first-child{
+  border-radius: 0 0 0 .3rem;
+  overflow: hidden;
+} */
+.djxy_bottom>div>span:first-child{
+  font-weight: 800;
+  color: #000;
+}
+.djxy_bottom>div>span:nth-child(2){
+  font-size: .7rem;
+}
+.djxy_bottom>div>img,.mrg>div>div>img{
+  width: 100%;
+  display: block;
+}
+.djxy_bottom,.mrg>div{
+  display: flex;
+}
+.djxy_bottom{
+  border-radius:0 0 .3rem .3rem ;
+  overflow: hidden;
+}
+.djxy_bottom>div,.mrg>div>div{
+  width: 25%;
+  box-sizing: border-box;
+  padding: 0 .5rem .5rem;
+  background: #fff;
+  border-right: .1rem solid #f6f6f6;
+  margin-bottom: .1rem;
+  display: flex;
+  flex-direction:column;
+}
+.djxy_bottom>div:last-child,.mrg>div>div:last-child{
+  border-right: none;
+}
 .djxy_top>div>span:first-child{
   background: linear-gradient(90deg, #45CAFF,#00f);
   font-weight: 900;
@@ -285,12 +397,10 @@ export default {
   font-size: .7rem;
 }
 .djxy_top>div:first-child{
-  border-radius: .3rem 0 0 0;
   border-right:.05rem solid #f6f6f6;
   border-bottom: .1rem solid #f6f6f6;
 }
 .djxy_top>div:nth-child(2){
-  border-radius: 0 .3rem 0 0;
   border-left:.05rem solid #f6f6f6;
   border-bottom: .1rem solid #f6f6f6;
 }
@@ -302,6 +412,8 @@ export default {
 }
 .djxy_top{
   display: flex;
+  border-radius: .3rem .3rem 0 0;
+  overflow: hidden;
 }
 .djxy_top>div>span{
   display: block;
@@ -310,7 +422,7 @@ export default {
   width: 42%;
   margin: 4% 4% 0;
 }
-.djxy>img{
+.djxy>img,.mrg>img{
   width: 100%;
 }
 .djxy div{
