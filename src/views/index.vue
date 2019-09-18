@@ -278,11 +278,13 @@
         </div>
       </div>
       <!-- 京东快报 -->
+      <jdkb></jdkb>
     </div>
   </div>
 </template>
 <script>
 import carousel from "../components/carousel";
+import jdkb from "../components/jdkb";
 export default {
   data() {
     return {
@@ -290,7 +292,8 @@ export default {
     };
   },
   components: {
-    carousel
+    carousel,
+    jdkb
   },
   mounted: function() {
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
@@ -324,6 +327,10 @@ export default {
 <style scoped>
 .bottom_pro{
   padding: 0 2.5%;
+}
+/* 京东快报 */
+.jd-kb{
+  display: flex;
 }
 /* 每日逛文字&圆角 */
 .mrg-top{

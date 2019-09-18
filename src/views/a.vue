@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div class="a1">
     <van-button type="primary" @click="showPopup">展示弹出层</van-button>
     <van-popup v-model="show" position="bottom"
   :style="{ height: '20%' }">
       <van-datetime-picker v-model="currentDate" type="date" :min-date="minDate" />
     </van-popup>
+    <jdkb></jdkb>
   </div>
 </template>
 <script>
+import jdkb from '../components/jdkb'
 export default {
   data() {
     return {
@@ -20,8 +22,15 @@ export default {
     showPopup() {
       this.show = true;
     }
+  },
+  components:{
+    jdkb
   }
 };
 </script>
 <style scoped>
+.a1{
+  height: 30rem;
+  background: #f6f6f6;
+}
 </style>
