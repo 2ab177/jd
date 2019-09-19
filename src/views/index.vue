@@ -25,6 +25,7 @@
         <a href="javascript:;">登录</a>
       </div>
       <!-- 主要商品 -->
+      
       <div>
         <!-- 轮播图 -->
         <carousel></carousel>
@@ -279,6 +280,29 @@
       </div>
       <!-- 京东快报 -->
       <jdkb></jdkb>
+      <!-- 为你推荐 -->
+      <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt="">
+      <div class="wntj">
+        <div>
+          <img src="../assets/wntj/1_sm.jpg" alt="">
+          <div>
+            <div><img src="../assets/zy.png" alt=""></div>
+            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/wntj/1_sm.jpg" alt="">
+          <div>
+            <div><img src="../assets/zy.png" alt=""></div>
+            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
+          </div>
+          <div>
+            <span>￥3988.00</span>
+            <span>新品</span>
+            <span>看相似</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -327,6 +351,37 @@ export default {
 <style scoped>
 .bottom_pro{
   padding: 0 2.5%;
+}
+/* 为你推荐 */
+.wntj>div>div{
+  display: flex;
+}
+.wntj>div>div>span{
+  font-size: .8rem;
+  display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+overflow: hidden;
+}
+.wntj>div>div>div>img{
+  width: 100%;
+}
+.wntj>div>div>div{
+  padding-top: .05rem;
+  width: 49%;
+}
+.wntj>div>img{
+  width: 100%;
+}
+.wntj>div{
+   width: 50%;
+   display: inline-block;
+   background: #fff;
+}
+.wntj_img{
+  display: block;
+  width: 100%;
+  margin-bottom: .05rem;
 }
 /* 京东快报 */
 .jd-kb{
@@ -487,7 +542,8 @@ export default {
   border-radius: 0 0 .2rem .2rem;
 }
 .container > div:nth-child(2) {
-  padding: 0 2.5% .2rem;
+    margin:0 .6rem;
+    overflow: hidden;
 }
 /* 上方搜索框 */
 .input_fixed {

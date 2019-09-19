@@ -6,9 +6,11 @@
       <van-datetime-picker v-model="currentDate" type="date" :min-date="minDate" />
     </van-popup>
     <jdkb></jdkb>
+    <lut></lut>
   </div>
 </template>
 <script>
+import lut from '../components/carousel'
 import jdkb from '../components/jdkb'
 export default {
   data() {
@@ -24,7 +26,8 @@ export default {
     }
   },
   components:{
-    jdkb
+    jdkb,
+    lut
   }
 };
 </script>
