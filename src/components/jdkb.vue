@@ -9,7 +9,7 @@
       </van-swipe-item>
       <van-swipe-item>
         <p>
-          <span>推荐</span> 深海赛尔凭什么是耳机届的老大
+          <span>推荐</span> 森海赛尔凭什么是耳机届的老大
         </p>
       </van-swipe-item>
       <van-swipe-item>

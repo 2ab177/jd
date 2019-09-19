@@ -34,6 +34,7 @@
 .carou {
   border-radius: 0.3rem;
   overflow: hidden;
+  transform: translateY(0);  
 }
 .carou img {
   width: 100%;
@@ -42,7 +43,7 @@
 .van-swipe__indicator{
   height: 3px;
   width: 8px;
-  border-radius:30%;
+  border-radius:20%;
 }
 .van-swipe__indicator--active{
   background: #fff ;
