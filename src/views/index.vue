@@ -20,7 +20,7 @@
       <div :class="fixed?'input_fixed':''" class="top_input">
         <span></span>
         <div class="input">
-          <a href="javascript:;">dell显示器</a>
+          <router-link to="/search">dell显示器</router-link>
         </div>
         <a href="javascript:;">登录</a>
       </div>
@@ -291,7 +291,7 @@
           </div>
         </div>
         <div>
-          <img src="../assets/wntj/1_sm.jpg" alt="">
+          <img :src="require('../' + src)"  alt="">
           <div>
             <div><img src="../assets/zy.png" alt=""></div>
             <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
@@ -312,7 +312,8 @@ import jdkb from "../components/jdkb";
 export default {
   data() {
     return {
-      fixed: false
+      fixed: false,
+      imgs:'assets/wntj/1_sm.jpg'
     };
   },
   components: {
@@ -345,7 +346,7 @@ export default {
       appTg.remove();
       window.addEventListener("scroll", this.scroll2);
     }
-  }
+  },
 };
 </script>
 <style scoped>

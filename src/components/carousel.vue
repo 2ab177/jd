@@ -42,7 +42,7 @@
 .van-swipe__indicator{
   height: 3px;
   width: 8px;
-  border-radius:30%;
+  border-radius:1.5px;
 }
 .van-swipe__indicator--active{
   background: #fff ;
