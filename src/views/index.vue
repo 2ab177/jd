@@ -237,7 +237,7 @@
           <div>
             <span>免息星期</span>
             <span>白条面息购</span>
-            <img src="../assets/mrg/mrg1.jpg" alt="">
+            <img src="../assets/mrg/mrg1.png" alt="">
           </div>
           <div>
             <span>品牌闪购</span>
@@ -264,12 +264,12 @@
           <div>
             <span>拍拍好物</span>
             <span>购大牌好物</span>
-            <img src="../assets/mrg/mrg6.jpg" alt="">
+            <img src="../assets/mrg/mrg6.png" alt="">
           </div>
           <div>
             <span>品牌秒杀</span>
             <span>低价抢大牌</span>
-            <img src="../assets/mrg/mrg7.jpg" alt="">
+            <img src="../assets/mrg/mrg7.png" alt="">
           </div>
           <div>
             <span>京东直播</span>
@@ -295,13 +295,8 @@
             <span>看相似</span>
           </div>
         </div>
-<<<<<<< HEAD
         <div class="wntj-right">
-          <router-link to=""><img class="wntj_proimg" src="../assets/wntj/1_sm.jpg" alt=""></router-link>
-=======
-        <div>
-          <img :src="require('../' + src)"  alt="">
->>>>>>> 4bf60ffe2589833b6c82aaa8d04e87487580db7c
+          <router-link to=""><img class="wntj_proimg" :src="require(`../assets/wntj/${imgs}.jpg`)" alt=""></router-link>
           <div>
             <div><img src="../assets/zy.png" alt=""></div>
             <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
@@ -323,7 +318,7 @@ export default {
   data() {
     return {
       fixed: false,
-      imgs:'assets/wntj/1_sm.jpg'
+      imgs:'1_sm'
     };
   },
   components: {

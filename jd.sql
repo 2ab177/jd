@@ -96,14 +96,14 @@ INSERT INTO jd_login
 VALUES(null, 'jerry', md5('123'));
 /**轮播图片**/
 INSERT INTO jd_carousel
-VALUES(null, '../assets/lunbo/cal-1.jpg'),
-  (null, '../assets/lunbo/cal-2.jpg'),
-  (null, '../assets/lunbo/cal-3.jpg'),
-  (null, '../assets/lunbo/cal-4.jpg'),
-  (null, '../assets/lunbo/cal-5.jpg'),
-  (null, '../assets/lunbo/cal-6.jpg'),
-  (null, '../assets/lunbo/cal-7.jpg'),
-  (null, '../assets/lunbo/cal-8.jpg');
+VALUES(null, 'cal-1'),
+  (null, 'cal-2'),
+  (null, 'cal-3'),
+  (null, 'cal-4'),
+  (null, 'cal-5'),
+  (null, 'cal-6'),
+  (null, 'cal-7'),
+  (null, 'cal-8');
 /**京东秒杀**/
 INSERT INTO jd_miaosha
 VALUES(null, '../assets/miaosha/ms1.jpg', 279, 299),
