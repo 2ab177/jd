@@ -5,7 +5,8 @@ import store from './store'
 import axios from 'axios'
 import { Button,DatetimePicker,Popup } from 'vant';
 import { Swipe, SwipeItem } from 'vant';
-
+import { CountDown } from 'vant';
+Vue.use(CountDown);
 Vue.use(Swipe).use(SwipeItem);
 Vue.use(DatetimePicker);
 Vue.use(Popup);

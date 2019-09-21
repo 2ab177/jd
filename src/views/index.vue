@@ -25,7 +25,7 @@
         <a href="javascript:;">登录</a>
       </div>
       <!-- 主要商品 -->
-      
+
       <div>
         <!-- 轮播图 -->
         <carousel></carousel>
@@ -101,13 +101,15 @@
           <div>
             <span></span>
             <span>18点场</span>
-            <div class="djs">
-              <span class="number">00</span>
-              <span>:</span>
-              <span class="number">42</span>
-              <span>:</span>
-              <span class="number">50</span>
-            </div>
+            <van-count-down :time="3600000">
+              <template v-slot="timeData">
+                <span class="item">{{ timeData.hours<10?( "0"+timeData.hours):timeData.hours }}</span>
+                <span>:</span>
+                <span class="item">{{ timeData.minutes<10?( "0"+timeData.minutes):timeData.minutes }}</span>
+                <span>:</span>
+                <span class="item">{{ timeData.seconds<10?( "0"+timeData.seconds):timeData.seconds }}</span>
+              </template>
+            </van-count-down>
           </div>
           <a href="javascript:;">更多秒杀</a>
         </div>
@@ -159,7 +161,7 @@
               </s>
             </li>
             <li>
-              <img src="../assets/miaosha/ms6.png" alt />
+              <img src="../assets/miaosha/ms6.jpg" alt />
               <span>
                 <span>￥</span>79
               </span>
@@ -177,7 +179,7 @@
               </s>
             </li>
             <li>
-              <img src="../assets/miaosha/ms8.png" alt />
+              <img src="../assets/miaosha/ms8.jpg" alt />
               <span>
                 <span>￥</span>366
               </span>
@@ -196,14 +198,14 @@
           <div>
             <span>串门好礼</span>
             <span>带着好礼走亲戚</span>
-            <img src="../assets/djxy/djxy1.jpg" alt="">
-            <img src="../assets/djxy/djxy2.jpg" alt="">
+            <img src="../assets/djxy/djxy1.jpg" alt />
+            <img src="../assets/djxy/djxy2.jpg" alt />
           </div>
           <div>
             <span>安全出游</span>
             <span>带着好礼走亲戚</span>
-            <img src="../assets/djxy/djxy3.jpg" alt="">
-            <img src="../assets/djxy/djxy4.jpg" alt="">
+            <img src="../assets/djxy/djxy3.jpg" alt />
+            <img src="../assets/djxy/djxy4.jpg" alt />
           </div>
         </div>
         <!-- 下部 -->
@@ -211,82 +213,84 @@
           <div>
             <span>浴上安全</span>
             <span>安全沐浴</span>
-            <img src="../assets/djxy/djxy5.jpg" alt="">
+            <img src="../assets/djxy/djxy5.jpg" alt />
           </div>
           <div>
             <span>畅玩人生</span>
             <span>任天堂索尼</span>
-            <img src="../assets/djxy/djxy6.jpg" alt="">
+            <img src="../assets/djxy/djxy6.jpg" alt />
           </div>
           <div>
             <span>初夏出游</span>
             <span>给心灵放假</span>
-            <img src="../assets/djxy/djxy7.jpg" alt="">
+            <img src="../assets/djxy/djxy7.jpg" alt />
           </div>
           <div>
             <span>铁骑纵横</span>
             <span>铁骑天下行</span>
-            <img src="../assets/djxy/djxy8.jpg" alt="">
+            <img src="../assets/djxy/djxy8.jpg" alt />
           </div>
         </div>
       </div>
       <!-- 每日逛 -->
       <div class="mrg">
-        <img src="../assets/mrg/mrg.png" alt="">
+        <img src="../assets/mrg/mrg.png" alt />
         <div class="mrg-top">
           <div>
             <span>免息星期</span>
             <span>白条面息购</span>
-            <img src="../assets/mrg/mrg1.png" alt="">
+            <img src="../assets/mrg/mrg1.png" alt />
           </div>
           <div>
             <span>品牌闪购</span>
             <span>购大牌好物</span>
-            <img src="../assets/mrg/mrg2.png" alt="">
+            <img src="../assets/mrg/mrg2.png" alt />
           </div>
           <div>
             <span>品牌秒杀</span>
             <span>低价抢大牌</span>
-            <img src="../assets/mrg/mrg3.png" alt="">
+            <img src="../assets/mrg/mrg3.png" alt />
           </div>
           <div>
             <span>京东直播</span>
             <span>边看边买</span>
-            <img src="../assets/mrg/mrg4.png" alt="">
+            <img src="../assets/mrg/mrg4.png" alt />
           </div>
-        </div>
-        <div class="mrg-bottom">
           <div>
             <span>排行榜</span>
             <span>热销推荐</span>
-            <img src="../assets/mrg/mrg5.png" alt="">
+            <img src="../assets/mrg/mrg5.png" alt />
           </div>
           <div>
             <span>拍拍好物</span>
             <span>购大牌好物</span>
-            <img src="../assets/mrg/mrg6.png" alt="">
+            <img src="../assets/mrg/mrg6.png" alt />
           </div>
           <div>
             <span>品牌秒杀</span>
             <span>低价抢大牌</span>
-            <img src="../assets/mrg/mrg7.png" alt="">
+            <img src="../assets/mrg/mrg7.png" alt />
           </div>
           <div>
             <span>京东直播</span>
             <span>边看边买</span>
-            <img src="../assets/mrg/mrg8.png" alt="">
+            <img src="../assets/mrg/mrg8.png" alt />
           </div>
         </div>
       </div>
       <!-- 京东快报 -->
       <jdkb></jdkb>
       <!-- 为你推荐 -->
-      <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt="">
+      <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt />
       <div class="wntj">
         <div class="wntj-left">
-          <router-link to=""><img class="wntj_proimg" src="../assets/wntj/1_sm.jpg" alt=""></router-link>
+          <router-link to>
+            <img class="wntj_proimg" src="../assets/wntj/1_sm.jpg" alt />
+          </router-link>
           <div>
-            <div><img src="../assets/zy.png" alt=""></div>
+            <div>
+              <img src="../assets/zy.png" alt />
+            </div>
             <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
           </div>
           <div>
@@ -296,9 +300,13 @@
           </div>
         </div>
         <div class="wntj-right">
-          <router-link to=""><img class="wntj_proimg" :src="require(`../assets/wntj/${imgs}.jpg`)" alt=""></router-link>
+          <router-link to>
+            <img class="wntj_proimg" :src="require(`../assets/wntj/${imgs}.jpg`)" alt />
+          </router-link>
           <div>
-            <div><img src="../assets/zy.png" alt=""></div>
+            <div>
+              <img src="../assets/zy.png" alt />
+            </div>
             <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
           </div>
           <div>
@@ -318,7 +326,7 @@ export default {
   data() {
     return {
       fixed: false,
-      imgs:'1_sm'
+      imgs: "2_sm"
     };
   },
   components: {
@@ -351,180 +359,183 @@ export default {
       appTg.remove();
       window.addEventListener("scroll", this.scroll2);
     }
-  },
+  }
 };
 </script>
 <style scoped>
-.bottom_pro{
+.bottom_pro {
   padding: 0 2.5%;
 }
 /* 为你推荐 */
-.wntj>div>div:last-child>span:last-child{
-font-size: .7rem;
-    border: 1px solid #bfbfbf;
-    color: #949494;
-    padding: .1rem .2rem;
+.wntj > div > div:last-child > span:last-child {
+  font-size: 0.7rem;
+  border: 1px solid #bfbfbf;
+  color: #949494;
+  padding: 0.1rem 0.2rem;
 }
-.wntj>div>div:last-child>span:nth-child(2){
+.wntj > div > div:last-child > span:nth-child(2) {
   border: 1px solid #e4393c;
-    color: #e4393c;
-    font-size: 8px;
-    padding: 0 3px;
-    margin-right: 5px;
-    display: block;
-    height: 11px;
+  color: #e4393c;
+  font-size: 8px;
+  padding: 0 3px;
+  margin-right: 5px;
 }
-.wntj>div>div:last-child{
+.wntj > div > div:last-child {
   align-items: center;
   justify-content: space-between;
-  padding: 0 .3rem ;
+  padding: 0 0.3rem;
 }
-.wntj>div>div{
-  margin: .5rem 0;
+.wntj > div > div {
+  margin: 0.5rem 0;
 }
-.wntj>div>div:last-child>span{
+.wntj > div > div:last-child > span {
   font-size: 1rem;
   color: #e4393c;
   font-weight: bold;
 }
-.wntj-left{
-  border-right: .1rem solid #f6f6f6;
+.wntj-left {
+  border-right: 0.1rem solid #f6f6f6;
 }
-.wntj-right{
-  border-left: .1rem solid #f6f6f6;
+.wntj-right {
+  border-left: 0.1rem solid #f6f6f6;
 }
-.wntj{
+.wntj {
   display: flex;
   width: 100%;
-  flex-flow:row wrap;
+  flex-flow: row wrap;
 }
-.wntj>div>div{
+.wntj > div > div {
   display: flex;
 }
-.wntj>div>div:nth-child(2)>span{
-  font-size: .8rem;
+.wntj > div > div:nth-child(2) > span {
+  font-size: 0.8rem;
   display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
-.wntj>div>div:nth-child(2)>div>img{
+.wntj > div > div:nth-child(2) > div > img {
   width: 100%;
 }
-.wntj>div>div:nth-child(2)>div{
+.wntj > div > div:nth-child(2) > div {
   width: 49%;
 }
-.wntj_proimg{
+.wntj_proimg {
   width: 100%;
 }
-.wntj>div{
+.wntj > div {
   box-sizing: border-box;
-   width: 50%;
-   background: #fff;
-   margin-bottom: .2rem;
+  width: 50%;
+  background: #fff;
+  margin-bottom: 0.2rem;
 }
-.wntj_img{
+.wntj_img {
   display: block;
   width: 100%;
-  margin-bottom: .1rem;
+  margin-bottom: 0.1rem;
 }
 /* 京东快报 */
-.jd-kb{
+.jd-kb {
   display: flex;
 }
 /* 每日逛文字&圆角 */
-.mrg-top{
-  border-radius: .3rem .3rem 0 0;
+.mrg-top {
+  border-radius: 0.3rem 0.3rem 0 0;
   overflow: hidden;
 }
-.mrg-bottom{
-  border-radius:0 0 .3rem .3rem ;
-  overflow: hidden;
-}
-.mrg>div>div>span:first-child{
+.mrg > div > div > span:first-child {
   font-weight: 800;
-  background: linear-gradient(90deg, #FF2A2A,#F139D2);
+  background: linear-gradient(90deg, #ff2a2a, #f139d2);
   color: transparent;
   -webkit-background-clip: text;
 }
-.mrg>div>div>span:nth-child(2){
-  font-size: .7rem;
+.mrg > div > div > span:nth-child(2) {
+  font-size: 0.7rem;
 }
 /* 主页背景 */
-.index{
+.index {
   background: #f6f6f6;
 }
 /* 东家小院&每日逛 */
-.djxy_bottom>div>span:first-child{
+.mrg-top {
+  display: flex;
+  flex-flow: row wrap;
+  width: ;
+}
+.djxy_bottom > div > span:first-child {
   font-weight: 800;
   color: #000;
 }
-.djxy_bottom>div>span:nth-child(2){
-  font-size: .7rem;
+.djxy_bottom > div > span:nth-child(2) {
+  font-size: 0.7rem;
 }
-.djxy_bottom>div>img,.mrg>div>div>img{
+.djxy_bottom > div > img,
+.mrg > div > div > img {
   width: 100%;
   display: block;
 }
-.djxy_bottom,.mrg>div{
+.djxy_bottom {
   display: flex;
 }
-.djxy_bottom{
-  border-radius:0 0 .3rem .3rem ;
+.djxy_bottom {
+  border-radius: 0 0 0.3rem 0.3rem;
   overflow: hidden;
 }
-.djxy_bottom>div,.mrg>div>div{
+.djxy_bottom > div,
+.mrg > div > div {
   width: 25%;
   box-sizing: border-box;
-  padding: 0 .5rem .5rem;
+  padding: 0 0.5rem 0.5rem;
   background: #fff;
-  border-right: .1rem solid #f6f6f6;
-  margin-bottom: .1rem;
+  border-right: 0.1rem solid #f6f6f6;
+  margin-bottom: 0.1rem;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 }
-.djxy_bottom>div:last-child,.mrg>div>div:last-child{
+.djxy_bottom > div:last-child,
+.mrg > div > div:last-child {
   border-right: none;
 }
-.djxy_top>div>span:first-child{
-  background: linear-gradient(90deg, #45CAFF,#00f);
+.djxy_top > div > span:first-child {
+  background: linear-gradient(90deg, #45caff, #00f);
   font-weight: 900;
   color: transparent;
   -webkit-background-clip: text;
 }
-.djxy_top>div>span:nth-child(2){
-  font-size: .7rem;
+.djxy_top > div > span:nth-child(2) {
+  font-size: 0.7rem;
 }
-.djxy_top>div:first-child{
-  border-right:.05rem solid #f6f6f6;
-  border-bottom: .1rem solid #f6f6f6;
+.djxy_top > div:first-child {
+  border-right: 0.05rem solid #f6f6f6;
+  border-bottom: 0.1rem solid #f6f6f6;
 }
-.djxy_top>div:nth-child(2){
-  border-left:.05rem solid #f6f6f6;
-  border-bottom: .1rem solid #f6f6f6;
+.djxy_top > div:nth-child(2) {
+  border-left: 0.05rem solid #f6f6f6;
+  border-bottom: 0.1rem solid #f6f6f6;
 }
-.djxy_top>div{
+.djxy_top > div {
   text-align: left;
   width: 50%;
   background: #fff;
-  padding:.8% 2% 2%;
+  padding: 0.8% 2% 2%;
 }
-.djxy_top{
+.djxy_top {
   display: flex;
-  border-radius: .3rem .3rem 0 0;
+  border-radius: 0.3rem 0.3rem 0 0;
   overflow: hidden;
 }
-.djxy_top>div>span{
+.djxy_top > div > span {
   display: block;
 }
-.djxy_top>div>img{
+.djxy_top > div > img {
   width: 42%;
   margin: 4% 4% 0;
 }
-.djxy>img,.mrg>img{
+.djxy > img,
+.mrg > img {
   width: 100%;
 }
-.djxy div{
+.djxy div {
   box-sizing: border-box;
 }
 /* app推广 */
@@ -572,16 +583,16 @@ overflow: hidden;
 }
 /* 主要内容容器 */
 .container {
-  background: url("../assets/bg.jpg")  no-repeat;
+  background: url("../assets/bg.jpg") no-repeat;
   background-position: center center;
   background-size: cover;
   overflow: hidden;
-  border-radius: 0 0 .2rem .2rem;
+  border-radius: 0 0 0.2rem 0.2rem;
 }
 .container > div:nth-child(2) {
-    margin:0 10px;
-    overflow: hidden;
-    transform: translateY(0); 
+  margin: 0 10px;
+  overflow: hidden;
+  transform: translateY(0);
 }
 /* 上方搜索框 */
 .input_fixed {
@@ -706,7 +717,7 @@ overflow: hidden;
   font-size: 0.8rem;
   margin-right: 0.4rem;
 }
-.number {
+.item {
   font-size: 0.8rem;
   display: inline-block;
   border: 1px solid #dfdfdf;
