@@ -87,7 +87,7 @@
         <div>
           <div>
             <span></span>
-            <span>18点场</span>
+            <span>{{htime}}点场</span>
             <van-count-down :time="3600000">
               <template v-slot="timeData">
                 <span class="item">{{ timeData.hours<10?( "0"+timeData.hours):timeData.hours }}</span>
@@ -176,6 +176,11 @@
             </li>
           </ul>
         </div>
+      </div>
+      <!-- 中部广告 -->
+      <div class="ad_middle">
+        <img src="../assets/middlead1.jpg" alt="">
+        <img src="../assets/middlead2.png" alt="">
       </div>
       <!-- 东家小院 -->
       <div class="djxy">
@@ -313,7 +318,8 @@ export default {
   data() {
     return {
       fixed: false,
-      imgs: "2_sm"
+      imgs: "2_sm",
+      htime:new Date().getHours()
     };
   },
   components: {
@@ -346,6 +352,17 @@ export default {
 <style scoped>
 .bottom_pro {
   padding: 0 2.5%;
+}
+/* 中部广告 */
+.ad_middle{
+  display: flex;
+  overflow: hidden;
+  border-radius: .3rem;
+  margin-top:.5rem;
+}
+.ad_middle>img{
+  display: block;
+  width: 50%;
 }
 /* 为你推荐 */
 .wntj > div > div:last-child > span:last-child {
@@ -659,6 +676,8 @@ export default {
   font-size: 0.8rem;
   display: inline-block;
   border: 1px solid #dfdfdf;
+  height: 16px;
+  padding: 0 2px;
 }
 .jdms a {
   display: block;
