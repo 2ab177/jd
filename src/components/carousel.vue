@@ -1,6 +1,6 @@
 <template>
   <div class="carou">
-    <van-swipe @change="onChange" >
+    <van-swipe @change="onChange" :autoplay="3000">
       <van-swipe-item>
         <img src="../assets/lunbo/cal-1.jpg" alt />
       </van-swipe-item>
@@ -27,10 +27,7 @@
       </van-swipe-item>
       <div class="custom-indicator" slot="indicator">
         <ul class="zsq">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li v-for="(item,i) of imgs" :key="i" :class="item==index?'active':''"></li>
         </ul>
       </div>
     </van-swipe>
@@ -40,14 +37,14 @@
 export default {
   data() {
     return {
+      index:0,
       current: 0,
-      imgs:[0,1,2,3,4,5,6,7]
+      imgs:[0,1,2,3,4,5,6,7],
     }
   },
   methods: {
     onChange(index) {
-      this.current = index;
-      console.log(index);
+      this.index=index;
     }
   }
 }
@@ -69,17 +66,19 @@ export default {
   text-decoration: none;
   display: flex;
   left: 50%;
-  bottom:  50%;
+  top:  90%;
+  margin-left: -50px;
 }
 .zsq>li {
   display: block;
   height: 3px;
   width: 8px;
   border-radius: 1.5px;
-  background: #fff;
+  background:hsla(0,0%,92.9%,.4);
+  margin: 2px
 }
 .active {
-  background: #fff;
-  width: 11px;
+  background: #fff !important;
+  width: 11px !important;
 }
 </style>
