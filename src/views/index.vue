@@ -538,9 +538,9 @@ export default {
 }
 /* 主要内容容器 */
 .container {
-  background: url("../assets/bg.jpg") no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background: url("../assets/bg.png") no-repeat;
+  background-position: top center;
+  background-size: 100%;
   overflow: hidden;
   border-radius: 0 0 0.2rem 0.2rem;
 }
@@ -616,7 +616,7 @@ export default {
 .list-item {
   width: 20%;
   margin-top: 0.7rem;
-  color: #fff;
+  color: #666;
 }
 .list-item > img {
   display: block;

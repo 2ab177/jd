@@ -38,7 +38,7 @@
 </script>
 <style scoped>
 .carousel {
-  transform: translateY(0);  
+  transform: translateY(0); /*不加overflow无效*/
 }
 .carousel img {
   width: 100%;
