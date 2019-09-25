@@ -3,7 +3,7 @@
     <!-- app推广 -->
     <app-tg> </app-tg>
     <!-- 商品导航列表 -->
-    <div class="container">
+    <div :class="fixed?'container_padd':''" class="container">
       <!-- 上方搜索框 -->
       <div :class="fixed?'input_fixed':''" class="top_input">
         <span></span>
@@ -332,7 +332,7 @@ export default {
   methods: {
     handleScroll: function() {
       var sTop = document.documentElement.scrollTop || document.body.scrollTop;
-      if (sTop >= 32) {
+      if (sTop >= 48) {
         this.fixed = true;
       } else {
         this.fixed = false;
@@ -537,6 +537,9 @@ export default {
   box-sizing: border-box;
 }
 /* 主要内容容器 */
+.container_padd{
+  padding-top:45px;
+}
 .container {
   background: url("../assets/bg.png") no-repeat;
   background-position: top center;
