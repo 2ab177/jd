@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- app推广 -->
-    <app-tg> </app-tg>
+    <app-tg></app-tg>
     <!-- 商品导航列表 -->
     <div :class="fixed?'container_padd':''" class="container">
       <!-- 上方搜索框 -->
@@ -87,16 +87,12 @@
         <div>
           <div>
             <span></span>
-            <span>{{htime}}点场</span>
-            <van-count-down :time="3600000">
-              <template v-slot="timeData">
-                <span class="item">{{ timeData.hours<10?( "0"+timeData.hours):timeData.hours }}</span>
-                <span>:</span>
-                <span class="item">{{ timeData.minutes<10?( "0"+timeData.minutes):timeData.minutes }}</span>
-                <span>:</span>
-                <span class="item">{{ timeData.seconds<10?( "0"+timeData.seconds):timeData.seconds }}</span>
-              </template>
-            </van-count-down>
+            <span>{{mstime.getHours()}}点场</span>
+            <span class="item">00</span>
+            <span>:</span>
+            <span class="item"><span v-show="60-mstime.getMinutes()<10">0</span>{{60-mstime.getMinutes()}}</span>
+            <span>:</span>
+            <span class="item"><span v-show="60-mstime.getSeconds()<10">0</span>{{60-mstime.getSeconds()}}</span>
           </div>
           <a href="javascript:;">更多秒杀</a>
         </div>
@@ -179,8 +175,8 @@
       </div>
       <!-- 中部广告 -->
       <div class="ad_middle">
-        <img src="../assets/middlead1.jpg" alt="">
-        <img src="../assets/middlead2.png" alt="">
+        <img src="../assets/middlead1.jpg" alt />
+        <img src="../assets/middlead2.png" alt />
       </div>
       <!-- 东家小院 -->
       <div class="djxy">
@@ -319,17 +315,23 @@ export default {
     return {
       fixed: false,
       imgs: "2_sm",
-      htime:new Date().getHours()
+      mstime:new Date()
     };
   },
   components: {
     carousel,
     jdkb
   },
-  mounted: function() {
+  mounted(){
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
+    this.djs();
   },
   methods: {
+    djs() {
+      setInterval(() => {
+        this.mstime=new Date();
+      }, 1000);
+    },
     handleScroll: function() {
       var sTop = document.documentElement.scrollTop || document.body.scrollTop;
       if (sTop >= 48) {
@@ -345,7 +347,7 @@ export default {
       } else {
         this.fixed = false;
       }
-    },
+    }
   }
 };
 </script>
@@ -354,13 +356,13 @@ export default {
   padding: 0 2.5%;
 }
 /* 中部广告 */
-.ad_middle{
+.ad_middle {
   display: flex;
   overflow: hidden;
-  border-radius: .3rem;
-  margin-top:.5rem;
+  border-radius: 0.3rem;
+  margin-top: 0.5rem;
 }
-.ad_middle>img{
+.ad_middle > img {
   display: block;
   width: 50%;
 }
@@ -537,8 +539,8 @@ export default {
   box-sizing: border-box;
 }
 /* 主要内容容器 */
-.container_padd{
-  padding-top:45px;
+.container_padd {
+  padding-top: 45px;
 }
 .container {
   background: url("../assets/bg.png") no-repeat;
