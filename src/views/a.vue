@@ -7,11 +7,13 @@
     </van-popup>
     <jdkb></jdkb>
     <lut></lut>
+    <pronav/>
   </div>
 </template>
 <script>
 import lut from '../components/carousel'
 import jdkb from '../components/jdkb'
+import pronav from '../components/pro_nav'
 export default {
   data() {
     return {
@@ -23,11 +25,16 @@ export default {
   methods: {
     showPopup() {
       this.show = true;
+    },
+    onClickIcon() {
+    },
+    onClickButton() {
     }
   },
   components:{
     jdkb,
-    lut
+    lut,
+    pronav
   }
 };
 </script>
@@ -35,5 +42,9 @@ export default {
 .a1{
   height: 30rem;
   background: #f6f6f6;
+}
+.icon{
+  width: 18px;
+  height: 18px;
 }
 </style>

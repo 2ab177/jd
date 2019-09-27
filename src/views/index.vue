@@ -460,7 +460,6 @@ export default {
 .mrg-top {
   display: flex;
   flex-flow: row wrap;
-  width: ;
 }
 .djxy_bottom > div > span:first-child {
   font-weight: 800;
