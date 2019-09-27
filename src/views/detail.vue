@@ -99,7 +99,7 @@
           <p>北京朝阳区三环到四环之间</p>
           <p>
             <span class="jdred">现货</span>
-            11:10前下单,预计今天({{mdtime.getMonth()+1+'月'+mdtime.getDay()+'日'}})送达
+            11:10前下单,预计今天({{mdtime.getMonth()+1+'月'+mdtime.getDate()+'日'}})送达
           </p>
         </div>
         <span></span>
@@ -115,7 +115,7 @@
       <div>
         <div>
           <div class="sup_server">
-            <div>
+            <div class="gou_marleft">
               <span></span>
               <span>99元免基础运费(20kg内)</span>
             </div>
@@ -123,7 +123,7 @@
               <span></span>
               <span>京东发货&售后</span>
             </div>
-            <div>
+            <div class="gou_marleft">
               <span></span>
               <span>7天无理由退货</span>
             </div>
@@ -134,8 +134,8 @@
             <div class="gou_marleft">
               <span></span>
               <span>京尊达</span>
-            </div>
-            <div>
+            </div >
+            <div class="gou_marleft">
               <span></span>
               <span>京准达</span>
             </div>
@@ -299,7 +299,7 @@ export default {
   align-items: center;
 }
 .ardetail > div:first-child {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -341,13 +341,13 @@ export default {
 .ar_juti > div:first-child {
   display: flex;
   flex-flow: row wrap;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 /* 评价总览 */
 .zonglan > div:last-child {
   display: flex;
   align-items: center;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 .zonglan > div:last-child > span:last-child {
   display: inline-block;
@@ -356,6 +356,7 @@ export default {
   background: url("../assets/back_right.png") no-repeat;
   background-size: 100%;
   margin-left: 0.5rem;
+  background-position-y: -2px;
 }
 .zonglan > div:first-child > span:first-child {
   font-size: 1rem;
@@ -385,7 +386,7 @@ export default {
   padding-right: 1.5rem;
 }
 .gou_marleft {
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 .sup_server > div {
   display: flex;
@@ -426,7 +427,7 @@ export default {
 .ggdz {
   background: #fff;
   padding-left: 0.6rem;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 .ggdz > div > div > p:last-child {
@@ -458,7 +459,7 @@ export default {
   margin-right: 1.3rem;
 }
 .baitiao > div > span {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 .baitiao {
   padding: 0.5rem 0;
@@ -479,8 +480,11 @@ export default {
   margin-right: 0.2rem;
 }
 .youhui_detail > p > span {
+  display: inline-block;
+  margin: 0;
   border: 1px solid #f5b5b6;
   color: #e4393c;
+  padding: 0 .1rem;
 }
 .youhui > span {
   z-index: 1;
@@ -507,10 +511,10 @@ export default {
 }
 .youhui {
   display: flex;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   position: relative;
   justify-content: space-between;
-  height: 56px;
+  height: 65px;
   border-bottom: 1px solid #eee;
 }
 .youhui_detail {
@@ -549,7 +553,7 @@ export default {
 }
 .title_detail {
   text-align: left;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color: #999;
   padding-top: 0.1rem;
   padding-bottom: 0.8rem;

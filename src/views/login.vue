@@ -76,13 +76,16 @@ export default {
     border-width: 0 0 1px 0;
     margin: 2rem 0;
   }
+  input{
+    background: transparent;
+  }
   .pwd>input{
     border: none;
     outline: none;
     padding:1rem 0;
     border-bottom:1px solid #efefef;
     width: 65%;
-    border: none
+    border: none;
   }
   .pwd>a{
     display: block;
@@ -148,6 +151,6 @@ export default {
     margin-left: -3.5rem;
     z-index: 999;
     padding:0 .8rem;
-    background: #fff;
+    background: #f6f6f6;
   }
 </style>
