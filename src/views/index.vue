@@ -10,7 +10,7 @@
         <div class="input">
           <router-link to="/search">dell显示器</router-link>
         </div>
-        <a href="javascript:;">登录</a>
+        <router-link :to="islogin?'/login':'/cart'">{{islogin?'登录':'我的'}}</router-link>
       </div>
       <!-- 主要商品 -->
       <div>
@@ -315,18 +315,27 @@ export default {
     return {
       fixed: false,
       imgs: "2_sm",
-      mstime:new Date()
+      mstime:new Date(),
+      islogin:false
     };
   },
   components: {
     carousel,
     jdkb
   },
+  created(){
+    this.logined();
+  },
   mounted(){
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
     this.djs();
   },
   methods: {
+    logined(){
+      if(localStorage.getItem("token")!==''||sessionStorage.getItem("token")!==''){
+        this.islogin=true;
+      }
+    },
     djs() {
       setInterval(() => {
         this.mstime=new Date();

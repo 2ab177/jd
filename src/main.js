@@ -24,7 +24,12 @@ Vue
   .use(GoodsActionButton);
 axios.defaults.baseURL = "http://127.0.0.1:5050"
 Vue.prototype.axios = axios;
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.directive('focus', {
+  inserted: function (el) {
+    el.focus()
+  },
+})
 new Vue({
   router,
   store,

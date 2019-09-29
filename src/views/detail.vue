@@ -1,5 +1,8 @@
 <template>
   <div class="detail">
+    <!-- 返回顶部 -->
+    <div @click="backtop" class="backtop">
+    </div>
     <!-- 商品导航 -->
     <pronav />
     <!-- 顶部app推广 -->
@@ -16,10 +19,14 @@
       <!-- 轮播图上方导航条 -->
       <div class="pro_nav">
         <div>
-          <router-link to="/">
-            <span></span>
-          </router-link>
-          <span class="about"></span>
+          <router-link to="/"><span class="pro_navspan"></span></router-link>
+          <!-- <div>
+            <span>商品</span>
+            <span>评价</span>
+            <span>详情</span>
+            <span>推荐</span>
+          </div> -->
+          <span class="pro_navspan about"></span>
         </div>
       </div>
     </div>
@@ -217,6 +224,16 @@
       </div>
       <span></span>
     </div>
+    <!-- 详情图片 -->
+    <div class="detail_img">
+      <div>
+        <span>商品介绍</span>
+        <span>规格参数</span>
+        <span>售后保障</span>
+      </div>
+        <img src="../assets/shangpin/p30_detail1.jpg" alt />
+      <img src="../assets/shangpin/p30_detail2.jpg" alt />
+    </div>
   </div>
 </template>
 <script>
@@ -241,35 +258,83 @@ export default {
   },
   components: {
     pronav
+  },
+  methods:{
+    backtop(){
+      window.scrollTo(0,0);
+    }
   }
 };
 </script>
 <style scoped>
-/* 闲置回收 */
-.xzhs>div>div>img{
-  margin-right: .4rem;
+/* 返回顶部 */
+.backtop{
+  width: 40px;
+  height: 40px;
+  border-radius: .2rem;
+  background:url('../assets/backtop.png') rgba(0, 0, 0, .7) no-repeat;
+  background-size: 24px 24px;
+  background-position: center center;
+  position: fixed;
+  bottom: 70px;
+  right: 1px;
+  z-index: 1;
 }
-.xzhs>div>div{
+/* 详情图片 */
+.detail_img> img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.detail_img {
+  background: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+.detail_img > div {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+.detail_img > div > span:first-child{
+  color: #e4393c;
+}
+.detail_img > div > span {
+  display: block;
+  flex: 1;
+  padding: 0.7rem 0;
+}
+.detail_img > div > span + span {
+  border-left: 1px solid #ddd;
+}
+/* 闲置回收 */
+.xzhs > div > div > img {
+  margin-right: 0.4rem;
+}
+.xzhs > div > div {
   display: flex;
   align-items: center;
 }
-.xzhs>div>p{
-  margin: .3rem 0;
+.xzhs > div > p {
+  margin: 0.3rem 0;
+  margin-left: 1.5rem;
+  color: #999;
 }
-.xzhs{
+.xzhs {
   background: #fff;
-  font-size: .8rem;
+  font-size: 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #333;
-  padding: .7rem;
+  padding: 0.7rem;
+  margin-bottom: 0.5rem;
 }
-.xzhs>span{
+.xzhs > span {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url('../assets/back_right.png') no-repeat;
+  background: url("../assets/back_right.png") no-repeat;
   background-size: 100%;
 }
 /* 评论详情 */
@@ -614,6 +679,17 @@ export default {
   display: block;
 }
 /* 轮播图上方导航条 */
+/* .pro_nav>div>div>span{
+  
+}
+.pro_nav>div>div{
+  flex: 1;
+  display: flex;
+  font-size: .9rem;
+  align-items: center;
+  justify-content: space-around;
+  color:#333;
+} */
 .pro_carousel {
   position: relative;
   z-index: 0;
@@ -634,7 +710,7 @@ export default {
   background-size: 75% !important;
   background-position: center center !important;
 }
-.pro_nav span {
+.pro_navspan{
   display: block;
   width: 1.9rem;
   height: 1.9rem;

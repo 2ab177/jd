@@ -1,19 +1,19 @@
 <template>
   <div class="login">
     <div class="jddl">
-      <span class="back"></span>
+      <router-link to="/"><span class="back"></span></router-link>
       <p>京东登录</p>
     </div>
-    <input v-model="uname" class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
+    <input  @input="canC" v-focus v-model="uname" class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
     <div class="pwd">
-      <input v-model="upwd" type="password" placeholder="请输入密码">
+      <input @input="canC" v-model="upwd" type="password" placeholder="请输入密码">
       <a href="">忘记密码</a>
     </div>
-    <a href="javascript:;" class="btn" @click="login">登录</a>
-    <a href="javascript:;" class="btn">一键登录</a>
+    <button  class="btn" @click="login">登录</button>
+    <button class="btn">一键登录</button>
     <div class="dxsj">
       <a href="javascript:;">短信验证码登录</a>
-      <a href="javascript:;">手机快速注册</a>
+      <router-link to="/reg">手机快速注册</router-link>
     </div>
     <div class="qqlogin">
       <span>其他登录方式</span>
@@ -28,13 +28,31 @@ export default {
   data(){
     return {
       uname:"",
-      upwd:""
+      upwd:"",
+      timer:undefined,
+      click:true
     }
   },
   methods:{
     login(){
+      //函数节流
       
     },
+    canC() {
+      //函数防抖
+      if (this.timer != undefined) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        var btn = document.getElementsByClassName("btn")[0];
+        if (this.uname != "" && this.upwd != "") {
+          btn.style.backgroundImage =
+            "linear-gradient(90deg,#f10000,#ff2000 73%,#ff4f18)";
+        } else {
+          btn.style.backgroundImage = "";
+        }
+      }, 200);
+    }
   }
 }
 </script>
@@ -76,6 +94,9 @@ export default {
     border-width: 0 0 1px 0;
     margin: 2rem 0;
   }
+  input{
+    background: transparent;
+  }
   .pwd>input{
     border: none;
     outline: none;
@@ -93,7 +114,8 @@ export default {
     border-left: 1px solid #ccc;
   }
   .btn{
-    display: block;
+    border: none;
+    outline: none;
     width: 100%;
     border-radius: 5.25rem;
     padding: 0.8rem 0;
@@ -148,6 +170,6 @@ export default {
     margin-left: -3.5rem;
     z-index: 999;
     padding:0 .8rem;
-    background: #fff;
+    background: #f6f6f6;
   }
 </style>
