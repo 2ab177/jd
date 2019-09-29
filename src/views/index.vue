@@ -175,8 +175,12 @@
       </div>
       <!-- 中部广告 -->
       <div class="ad_middle">
-        <img src="../assets/middlead1.jpg" alt />
-        <img src="../assets/middlead2.png" alt />
+        <div>
+          <img src="../assets/middlead1.jpg" alt />
+        </div>
+        <div>
+          <img src="../assets/middlead2.png" alt />
+        </div>
       </div>
       <!-- 东家小院 -->
       <div class="djxy">
@@ -371,9 +375,13 @@ export default {
   border-radius: 0.3rem;
   margin-top: 0.5rem;
 }
-.ad_middle > img {
-  display: block;
+.ad_middle>div > img {
+  width: 100%;
+  height: 100%;
+}
+.ad_middle>div{
   width: 50%;
+
 }
 /* 为你推荐 */
 .wntj > div > div:last-child > span:last-child {

@@ -103,7 +103,7 @@ export default {
     padding:1rem 0;
     border-bottom:1px solid #efefef;
     width: 65%;
-    border: none
+    border: none;
   }
   .pwd>a{
     display: block;
