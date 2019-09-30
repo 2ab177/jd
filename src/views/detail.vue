@@ -6,7 +6,7 @@
     <!-- 商品导航 -->
     <pronav />
     <!-- 顶部app推广 -->
-    <app-tg />
+    <apptg />
     <!-- 商品轮播图 -->
     <div class="pro_carousel">
       <div class="carousel">
@@ -237,7 +237,8 @@
   </div>
 </template>
 <script>
-import pronav from "../components/pro_nav";
+import apptg from '../components/app_tg.vue'
+import pronav from "../components/pro_nav"
 export default {
   data() {
     return {
@@ -257,7 +258,8 @@ export default {
     };
   },
   components: {
-    pronav
+    pronav,
+    apptg
   },
   methods:{
     backtop(){
@@ -276,7 +278,7 @@ export default {
   background-size: 24px 24px;
   background-position: center center;
   position: fixed;
-  bottom: 70px;
+  bottom: 65px;
   right: 1px;
   z-index: 1;
 }

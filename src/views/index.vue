@@ -1,7 +1,21 @@
 <template>
   <div class="index">
+    <!-- 底部导航栏 -->
+    <jdtabber/>
     <!-- app推广 -->
-    <app-tg></app-tg>
+    <div class="app_tg">
+      <div>
+        <img @click="offApptg" src="../assets/off.png" alt />
+        <img src="../assets/jd_app.png" alt />
+        <div>
+          <span>打开京东App购物</span>
+          <span>新人领188元红包</span>
+        </div>
+      </div>
+      <div>
+        <a href="javascript:;">立即打开</a>
+      </div>
+    </div>
     <!-- 商品导航列表 -->
     <div :class="fixed?'container_padd':''" class="container">
       <!-- 上方搜索框 -->
@@ -274,58 +288,28 @@
       <jdkb></jdkb>
       <!-- 为你推荐 -->
       <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt />
-      <div class="wntj">
-        <div class="wntj-left">
-          <router-link to>
-            <img class="wntj_proimg" src="../assets/wntj/1_sm.jpg" alt />
-          </router-link>
-          <div>
-            <div>
-              <img src="../assets/zy.png" alt />
-            </div>
-            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
-          </div>
-          <div>
-            <span>￥3988.00</span>
-            <span>新品</span>
-            <span>看相似</span>
-          </div>
-        </div>
-        <div class="wntj-right">
-          <router-link to>
-            <img class="wntj_proimg" :src="require(`../assets/wntj/${imgs}.jpg`)" alt />
-          </router-link>
-          <div>
-            <div>
-              <img src="../assets/zy.png" alt />
-            </div>
-            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
-          </div>
-          <div>
-            <span>￥3988.00</span>
-            <span>新品</span>
-            <span>看相似</span>
-          </div>
-        </div>
-      </div>
+      <product></product>
     </div>
   </div>
 </template>
 <script>
 import carousel from "../components/carousel";
 import jdkb from "../components/jdkb";
+import product from "../components/product";
+import jdtabber from '../components/index_tabber';
 export default {
   data() {
     return {
       fixed: false,
-      imgs: "2_sm",
       mstime:new Date(),
       islogin:false
     };
   },
   components: {
     carousel,
-    jdkb
+    jdkb,
+    product,
+    jdtabber
   },
   created(){
     this.logined();
@@ -335,6 +319,12 @@ export default {
     this.djs();
   },
   methods: {
+    offApptg() {
+      window.removeEventListener("scroll", this.handleScroll);
+      var appTg = document.getElementsByClassName("app_tg")[0];
+      appTg.remove();
+      window.addEventListener("scroll", this.scroll2);
+    },
     logined(){
       if(localStorage.getItem("token")!==''||sessionStorage.getItem("token")!==''){
         this.islogin=true;
@@ -365,8 +355,58 @@ export default {
 };
 </script>
 <style scoped>
+/* 为你推荐图片 */
+.wntj_img {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.1rem;
+}
+/* app推广 */
+.app_tg {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 3rem;
+}
+.app_tg > div {
+  height: 100%;
+  background: #232326;
+  width: 68%;
+  display: flex;
+  align-items: center;
+}
+.app_tg > div > img:first-child {
+  width: 1rem;
+  height: 1rem;
+  margin: 1rem 1rem 1rem 0.5rem;
+}
+.app_tg > div > img:nth-child(2) {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-right: 0.5rem;
+}
+.app_tg > div > div > span:first-child {
+  display: block;
+  font-size: 0.8rem;
+  color: #fff;
+}
+.app_tg > div > div > span:nth-child(2) {
+  font-size: 0.75rem;
+  color: #999999;
+}
+.app_tg > div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32%;
+  background: #cd2525;
+}
+.app_tg > div:nth-child(2) > a {
+  color: #fff;
+}
 .bottom_pro {
   padding: 0 2.5%;
+  padding-bottom: 55px;
 }
 /* 中部广告 */
 .ad_middle {
@@ -382,74 +422,6 @@ export default {
 .ad_middle>div{
   width: 50%;
 
-}
-/* 为你推荐 */
-.wntj > div > div:last-child > span:last-child {
-  font-size: 0.7rem;
-  border: 1px solid #bfbfbf;
-  color: #949494;
-  padding: 0.1rem 0.2rem;
-}
-.wntj > div > div:last-child > span:nth-child(2) {
-  border: 1px solid #e4393c;
-  color: #e4393c;
-  font-size: 8px;
-  padding: 0 3px;
-  margin-right: 5px;
-}
-.wntj > div > div:last-child {
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0.3rem;
-}
-.wntj > div > div {
-  margin: 0.5rem 0;
-}
-.wntj > div > div:last-child > span {
-  font-size: 1rem;
-  color: #e4393c;
-  font-weight: bold;
-}
-.wntj-left {
-  border-right: 0.1rem solid #f6f6f6;
-}
-.wntj-right {
-  border-left: 0.1rem solid #f6f6f6;
-}
-.wntj {
-  display: flex;
-  width: 100%;
-  flex-flow: row wrap;
-}
-.wntj > div > div {
-  display: flex;
-}
-.wntj > div > div:nth-child(2) > span {
-  font-size: 0.8rem;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-.wntj > div > div:nth-child(2) > div > img {
-  width: 100%;
-}
-.wntj > div > div:nth-child(2) > div {
-  width: 49%;
-}
-.wntj_proimg {
-  width: 100%;
-}
-.wntj > div {
-  box-sizing: border-box;
-  width: 50%;
-  background: #fff;
-  margin-bottom: 0.2rem;
-}
-.wntj_img {
-  display: block;
-  width: 100%;
-  margin-bottom: 0.1rem;
 }
 /* 京东快报 */
 .jd-kb {

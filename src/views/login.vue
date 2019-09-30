@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="jddl">
-      <router-link to="/"><span class="back"></span></router-link>
+      <span @click="back" class="back"></span>
       <p>京东登录</p>
     </div>
     <input  @input="canC" v-focus v-model="uname" class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
@@ -34,6 +34,9 @@ export default {
     }
   },
   methods:{
+    back(){
+      this.$router.go(-1);//返回上一层
+    },
     login(){
       //函数节流
       

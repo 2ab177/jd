@@ -16,6 +16,11 @@
   </div>
 </template>
 <script>
+import {
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton
+} from 'vant';
 export default {
   methods: {
     onClickIcon() {
@@ -24,6 +29,11 @@ export default {
     onClickButton() {
       
     }
+  },
+  components:{
+    'van-goods-action':GoodsAction,
+    'van-goods-action-icon':GoodsActionIcon,
+    'van-goods-action-button':GoodsActionButton,
   }
 };
 </script>

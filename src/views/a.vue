@@ -1,19 +1,22 @@
 <template>
   <div class="a1">
     <van-button type="primary" @click="showPopup">展示弹出层</van-button>
-    <van-popup v-model="show" position="bottom"
+    <Popup v-model="show" position="bottom"
   :style="{ height: '20%' }">
-      <van-datetime-picker v-model="currentDate" type="date" :min-date="minDate" />
-    </van-popup>
+      <DatetimePicker v-model="currentDate" type="date" :min-date="minDate" />
+    </Popup>
     <jdkb></jdkb>
     <lut></lut>
     <pronav/>
+    <product></product>
   </div>
 </template>
 <script>
 import lut from '../components/carousel'
 import jdkb from '../components/jdkb'
 import pronav from '../components/pro_nav'
+import product from '../components/product'
+import { Button,DatetimePicker,Popup } from 'vant'
 export default {
   data() {
     return {
@@ -34,7 +37,11 @@ export default {
   components:{
     jdkb,
     lut,
-    pronav
+    pronav,
+    product,
+   "van-button":Button,
+    DatetimePicker,
+    Popup,
   }
 };
 </script>

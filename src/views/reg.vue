@@ -31,11 +31,10 @@
         </div>
       </div>
     </div>
+    <!-- 注册页面 -->
     <div class="login">
       <div class="jddl">
-        <router-link to="/login">
-          <span class="back"></span>
-        </router-link>
+        <span @click="back" class="back"></span>
         <p>京东注册</p>
       </div>
       <input @input="canC" v-model="uphone" class="uname" type="text" placeholder="请输入11位手机号码" />
@@ -65,6 +64,9 @@ export default {
   },
   methods: {
     //点击同意后移除模态框
+    back(){
+      this.$router.go(-1);//返回上一层
+    },
     arrge() {
       var mtk = document.getElementsByClassName("reg")[0];
       mtk.remove();

@@ -17,10 +17,8 @@
 export default {
   methods:{
      offApptg() {
-      window.removeEventListener("scroll", this.handleScroll);
       var appTg = document.getElementsByClassName("app_tg")[0];
       appTg.remove();
-      window.addEventListener("scroll", this.scroll2);
     }
   }
 }
