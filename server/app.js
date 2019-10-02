@@ -13,7 +13,7 @@ const pool=require('./pool.js');
 
 //4:创建web服务器监听 8080 端口
 var server = express();
-server.listen(8080);
+server.listen(5050);
 //使用body-parser中间件
 server.use(bodyParser.urlencoded({extended:false}));
 //5:处理跨域 cors 
@@ -21,8 +21,9 @@ server.use(bodyParser.urlencoded({extended:false}));
 //     http://127.0.0.1:5050  (ok)
 //     http://localhost:5050
 //5.2:每请求是否验证true
+//要实现手机能够访问地址要加上本机ip地址 查看本机ip地址命令ipconfig/all
 server.use(cors({
-  origin: ["http://127.0.0.1:5050", "http://localhost:5050"],
+  origin: ["http://127.0.0.1:8080", "http://localhost:8080"],
   credentials: true
 }))
 //session一定要在所有请求之前;
@@ -58,13 +59,13 @@ server.use((req, res, next)=>{
 //http://127.0.0.1:8080/login?uname=tom&upwd=123
 //http://127.0.0.1:8080/login?uname=tom&upwd=122
 //托管静态资源
-server.use(express.static('public'));
+// server.use(express.static('public'));
 server.post("/login", (req, res) => {
   //6.1:接收网页传递数据 用户名和密码
   var u = req.body.uname;
   var p = req.body.upwd;
   //6.2:创建sql
-  var sql = "SELECT id FROM xz_login";
+  var sql = "SELECT id FROM jd_login";
   sql += " WHERE uname = ? AND upwd = md5(?)";
   //6.3:执行sql语句并且获取返回结果
   pool.query(sql, [u, p], (err, result) => {
@@ -94,6 +95,30 @@ server.post("/reg", (req, res) => {
     }
   });
 })
+server.get('/carousel', (req, res) => {
+  var sql = "SELECT cimg FROM jd_carousel";
+  pool.query(sql, [], (err, result) => {
+    //6:获取返回结果发送客户端
+    if (err) throw err;
+    res.send(result);
+  });
+})
+server.get('/mrg', (req, res)=>{
+  var sql = "SELECT title,details,mrgimg FROM jd_mrg";
+  pool.query(sql, [], (err, result) => {
+    //6:获取返回结果发送客户端
+    if (err) throw err;
+    res.send(result);
+  });
+})
+server.get('/miaosha', (req, res) => {
+  var sql = "SELECT mimg,nowprice,oldprice FROM jd_miaosha";
+  pool.query(sql, [], (err, result) => {
+    //6:获取返回结果发送客户端
+    if (err) throw err;
+    res.send(result);
+  });
+})
 server.get("/product", (req, res) => {
   //2:接收客户请求数据 
   //  pno 页码   pageSize 页大小
@@ -108,8 +133,8 @@ server.get("/product", (req, res) => {
     ps = 4;
   }
   //4:创建sql语句
-  var sql = "SELECT lid,lname,price,img_url";
-  sql += " FROM xz_laptop";
+  var sql = "SELECT title,typeimg,price,smproimg,buytype";
+  sql += " FROM jd_product";
   sql += " LIMIT ?,?";
   var offset = (pno - 1) * ps;//起始记录数 ?
   ps = parseInt(ps);      //行数       ?

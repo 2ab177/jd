@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- 底部导航栏 -->
-    <jdtabber/>
+    <jdtabber />
     <!-- app推广 -->
     <div class="app_tg">
       <div>
@@ -104,84 +104,29 @@
             <span>{{mstime.getHours()}}点场</span>
             <span class="item">00</span>
             <span>:</span>
-            <span class="item"><span v-show="60-mstime.getMinutes()<10">0</span>{{60-mstime.getMinutes()}}</span>
+            <span class="item">
+              <span v-show="60-mstime.getMinutes()<10">0</span>
+              {{60-mstime.getMinutes()}}
+            </span>
             <span>:</span>
-            <span class="item"><span v-show="60-mstime.getSeconds()<10">0</span>{{60-mstime.getSeconds()}}</span>
+            <span class="item">
+              <span v-show="60-mstime.getSeconds()<10">0</span>
+              {{60-mstime.getSeconds()}}
+            </span>
           </div>
           <a href="javascript:;">更多秒杀</a>
         </div>
         <div class="mslist">
           <ul>
-            <li>
-              <img src="../assets/miaosha/ms1.jpg" alt />
+            <li v-for="(item,i) of miaosha" :key="i">
+              <img :src="require(`../assets/miaosha/${item.mimg}.jpg`)" alt />
               <span>
-                <span>￥</span>279
+                <span>￥</span>
+                {{item.nowprice}}
               </span>
               <s>
-                <span>￥</span>299
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms2.jpg" alt />
-              <span>
-                <span>￥</span>1279
-              </span>
-              <s>
-                <span>￥</span>1399
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms3.jpg" alt />
-              <span>
-                <span>￥</span>159
-              </span>
-              <s>
-                <span>￥</span>129
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms4.jpg" alt />
-              <span>
-                <span>￥</span>559
-              </span>
-              <s>
-                <span>￥</span>466
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms5.jpg" alt />
-              <span>
-                <span>￥</span>59
-              </span>
-              <s>
-                <span>￥</span>100
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms6.jpg" alt />
-              <span>
-                <span>￥</span>79
-              </span>
-              <s>
-                <span>￥</span>89
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms7.jpg" alt />
-              <span>
-                <span>￥</span>69
-              </span>
-              <s>
-                <span>￥</span>99
-              </s>
-            </li>
-            <li>
-              <img src="../assets/miaosha/ms8.jpg" alt />
-              <span>
-                <span>￥</span>366
-              </span>
-              <s>
-                <span>￥</span>315
+                <span>￥</span>
+                {{item.oldprice}}
               </s>
             </li>
           </ul>
@@ -242,45 +187,10 @@
       <div class="mrg">
         <img src="../assets/mrg/mrg.png" alt />
         <div class="mrg-top">
-          <div>
-            <span>免息星期</span>
-            <span>白条面息购</span>
-            <img src="../assets/mrg/mrg1.png" alt />
-          </div>
-          <div>
-            <span>品牌闪购</span>
-            <span>购大牌好物</span>
-            <img src="../assets/mrg/mrg2.png" alt />
-          </div>
-          <div>
-            <span>品牌秒杀</span>
-            <span>低价抢大牌</span>
-            <img src="../assets/mrg/mrg3.png" alt />
-          </div>
-          <div>
-            <span>京东直播</span>
-            <span>边看边买</span>
-            <img src="../assets/mrg/mrg4.png" alt />
-          </div>
-          <div>
-            <span>排行榜</span>
-            <span>热销推荐</span>
-            <img src="../assets/mrg/mrg5.png" alt />
-          </div>
-          <div>
-            <span>拍拍好物</span>
-            <span>购大牌好物</span>
-            <img src="../assets/mrg/mrg6.png" alt />
-          </div>
-          <div>
-            <span>品牌秒杀</span>
-            <span>低价抢大牌</span>
-            <img src="../assets/mrg/mrg7.png" alt />
-          </div>
-          <div>
-            <span>京东直播</span>
-            <span>边看边买</span>
-            <img src="../assets/mrg/mrg8.png" alt />
+          <div v-for="(item,i) of mrg" :key="i">
+            <span>{{item.title}}</span>
+            <span>{{item.details}}</span>
+            <img :src="require(`../assets/mrg/${item.mrgimg}.png`)" alt />
           </div>
         </div>
       </div>
@@ -288,51 +198,109 @@
       <jdkb></jdkb>
       <!-- 为你推荐 -->
       <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt />
-      <product></product>
+      <div class="wntj">
+        <div  class="wntj-left" v-for="(item,i) of products" :key="i">
+          <router-link to>
+            <img  class="wntj_proimg" :src="require(`../assets/wntj/${item.smproimg}.jpg`)" alt />
+          </router-link>
+          <div>
+            <div>
+              <img :src="require(`../assets/${item.typeimg}.png`)" alt />
+            </div>
+            <span>{{item.title}}</span>
+          </div>
+          <div>
+            <span>￥{{item.price.toFixed(2)}}</span>
+            <span v-show="item.buytype!=null">{{item.buytype}}</span>
+            <span>看相似</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import carousel from "../components/carousel";
 import jdkb from "../components/jdkb";
-import product from "../components/product";
-import jdtabber from '../components/index_tabber';
+import jdtabber from "../components/index_tabber";
 export default {
   data() {
     return {
       fixed: false,
-      mstime:new Date(),
-      islogin:false
+      mstime: new Date(),
+      islogin: false,
+      miaosha: [],
+      mrg: [],
+      products: [],
+      pno: 1,
+      canc:true
     };
   },
   components: {
     carousel,
     jdkb,
-    product,
     jdtabber
   },
-  created(){
+  created() {
     this.logined();
+    this.gmiaosha();
+    this.gmrg();
   },
-  mounted(){
+  mounted() {
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
     this.djs();
+    window.addEventListener("scroll", this.gproducts);
   },
   methods: {
+    gproducts() {
+      if(this.pno>2){
+        return;
+      }
+      var st = document.documentElement.scrollTop || document.body.scrollTop;
+      var wh = window.innerHeight;
+      var sh = document.body.scrollHeight;
+      if (this.canc&&st + wh >= sh) {
+        this.canc=false;
+        this.axios.get("/product",{
+          params:{
+            pno:this.pno
+          }
+        })
+        .then(res => {
+          this.pno+=1;
+          console.log(this.pno);
+          this.products =this.products.concat(res.data.data);
+          this.canc=true;
+        });
+      }
+    },
+    gmrg() {
+      this.axios.get("/mrg").then(res => {
+        this.mrg = res.data;
+      });
+    },
+    gmiaosha() {
+      this.axios.get("/miaosha").then(res => {
+        this.miaosha = res.data;
+      });
+    },
     offApptg() {
       window.removeEventListener("scroll", this.handleScroll);
       var appTg = document.getElementsByClassName("app_tg")[0];
       appTg.remove();
       window.addEventListener("scroll", this.scroll2);
     },
-    logined(){
-      if(localStorage.getItem("token")!==''||sessionStorage.getItem("token")!==''){
-        this.islogin=true;
+    logined() {
+      if (
+        localStorage.getItem("token") !== "" ||
+        sessionStorage.getItem("token") !== ""
+      ) {
+        this.islogin = true;
       }
     },
     djs() {
       setInterval(() => {
-        this.mstime=new Date();
+        this.mstime = new Date();
       }, 1000);
     },
     handleScroll: function() {
@@ -355,10 +323,72 @@ export default {
 };
 </script>
 <style scoped>
-/* 为你推荐图片 */
+/* 为你推荐 */
 .wntj_img {
   display: block;
   width: 100%;
+  margin-bottom: 0.1rem;
+}
+.wntj > div > div:last-child > span:last-child {
+  font-size: 0.7rem;
+  border: 1px solid #bfbfbf;
+  color: #949494;
+  padding: 0.1rem 0.2rem;
+}
+.wntj > div > div:last-child > span:nth-child(2) {
+  border: 1px solid #e4393c;
+  color: #e4393c;
+  font-size: 8px;
+  padding: 0 3px;
+  margin-right: 5px;
+}
+.wntj > div > div:last-child {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+}
+.wntj > div > div {
+  margin: 0.5rem 0;
+}
+.wntj > div > div:last-child > span {
+  font-size: 1rem;
+  color: #e4393c;
+  font-weight: bold;
+}
+.wntj-left {
+  border-right: 0.1rem solid #f6f6f6;
+}
+.wntj-right {
+  border-left: 0.1rem solid #f6f6f6;
+}
+.wntj {
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+}
+.wntj > div > div {
+  display: flex;
+}
+.wntj > div > div:nth-child(2) > span {
+  font-size: 0.8rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.wntj > div > div:nth-child(2) > div > img {
+  width: 100%;
+}
+.wntj > div > div:nth-child(2) > div {
+  width: 49%;
+}
+.wntj_proimg {
+  width: 100%;
+}
+.wntj > div {
+  box-sizing: border-box;
+  width: 50%;
+  background: #fff;
   margin-bottom: 0.1rem;
 }
 /* app推广 */
@@ -415,13 +445,12 @@ export default {
   border-radius: 0.3rem;
   margin-top: 0.5rem;
 }
-.ad_middle>div > img {
+.ad_middle > div > img {
   width: 100%;
   height: 100%;
 }
-.ad_middle>div{
+.ad_middle > div {
   width: 50%;
-
 }
 /* 京东快报 */
 .jd-kb {

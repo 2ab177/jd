@@ -16,14 +16,14 @@ router.get("/addcart", (req, res) => {
   var lname = req.query.lname;
   //console.log(lid + ":" + price + ":" + lname)
   //4:创建查询sql:当前用户是否购买此商品
-  var sql="select id from xz_cart where uid=? and lid=?"
+  var sql ="select id from jd_cart where uid=? and lid=?"
   //5:执行sql语句
   pool.query(sql,[uid,lid],(err,result)=>{
     if(err) throw err;
     if(result.length==0){
-      var sql=`insert into xz_cart values(null,${lid},${price},1,'${lname}',${uid})`;
+      var sql =`insert into jd_cart values(null,${lid},${price},1,'${lname}',${uid})`;
     }else{
-      var sql=`update xz_cart set count=count+1 where uid=${uid} and lid=${lid}`;
+      var sql =`update jd_cart set count=count+1 where uid=${uid} and lid=${lid}`;
     }
     pool.query(sql,(err,result)=>{
       if(err)throw err;
@@ -41,7 +41,7 @@ router.get("/addcart", (req, res) => {
 })
 router.get("/carts",(req,res)=>{
 	var uid=req.user.id;
-  var sql="select id,lname,price,count from xz_cart where uid=?";
+  var sql ="select id,lname,price,count from jd_cart where uid=?";
   pool.query(sql,[uid],(err,result)=>{
     if(err) throw err;
     res.send({code:1,msg:"查询成功",data:result});
@@ -54,7 +54,7 @@ router.get("/carts",(req,res)=>{
 //4获取服务器获取结果判断删除是否成功
 router.get("/delitem",(req,res)=>{
   var id=req.query.id;
-  var sql="delete from xz_cart where id=?";
+  var sql ="delete from jd_cart where id=?";
   pool.query(sql,[id],(err,result)=>{
     if(err) throw err;
     if(result.affectedRows>0){
@@ -72,7 +72,7 @@ router.get("/delitem",(req,res)=>{
 //5.将结果返回客户端
 router.get("/delitems",(req,res)=>{
   var id=req.query.id;
-  var sql = `delete from xz_cart where id in (${id})`;
+  var sql = `delete from jd_cart where id in (${id})`;
   pool.query(sql,(err,result)=>{
     if(err) throw err;
     if(result.affectedRows>0){

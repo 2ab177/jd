@@ -1,13 +1,20 @@
 <template>
-  <div>
+  <div class="cart_container">
     <!-- 底部总价计算 -->
-    <div>
+    <div v-if="false" class="gwc_count">
       <div>
-        <span></span>
-        <p>全选</p>
+        <label class="selectall">
+          <input type="checkbox" v-model="selected" @click="selectAll">
+          <span></span>
+        </label>
+        <span>全选</span>
       </div>
-      <span>总计:￥5999.00</span>
-      <button>去结算</button>
+      <div>
+        <span>
+          <span>总计:</span> ￥{{total.toFixed(2)}}
+        </span>
+        <button>去结算</button>
+      </div>
     </div>
     <div class="gwc">
       <!-- 条目一 -->
@@ -17,73 +24,208 @@
         <span class="tomore"></span>
       </div>
       <!-- 条目二 -->
-      <div class="bjdw">
+      <div v-if="false" class="bjdw">
         <div>
           <span></span>
           <span>厦门市思明区</span>
         </div>
-        <span>编辑商品</span>
+        <span @click="dels">删除选中商品</span>
       </div>
       <!-- 商品条目 -->
-      <div @click="selected" class="gwc_product">
-        <div class="proimg">
-          <i></i>
-          <img src="../assets/wntj/1_sm.jpg" alt />
-        </div>
-        <div class="pro-detail">
-          <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
-          <div class="price">
-            <span>￥3988.00</span>
+      <div v-if="false" class="product_list" @click="splist">
+        <div v-for="(item,i) of carts" :key="i"  class="gwc_product">
+          <div class="proimg">
+            <label class="selected">
+              <input v-model="item.cc" type="checkbox" >
+              <span></span>
+            </label>
+            <img src="../assets/wntj/1_sm.jpg" alt />
+          </div>
+          <div class="pro-detail">
+            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
+            <div class="price">
+              <span>{{item.p.toFixed(2)}}</span>
+              <div>
+                <span class="reduce" :data-i="i" data-ys="reduce"></span>
+                <input v-model="item.c" class="num" type="number" />
+                <span :data-i="i" class="plus" data-ys="plus"></span>
+              </div>
+            </div>
             <div>
-              <span class="reduce"></span>
-              <input value="1" class="num" type="number" />
-              <span class="plus"></span>
+              <span>移入关注</span>
+              <span :data-i="i">删除</span>
             </div>
           </div>
-          <div>
-            <span>移入关注</span>
-            <span>删除</span>
-          </div>
         </div>
+      </div>
+    </div>
+    <div class="wlogin">
+      <div>
+        <span>登录后可以同步购物车中的商品</span>
+        <router-link to="/login"><button>登录</button></router-link>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+  data(){
+    return {
+      carts:[{p:3988,c:2,cc:false},{p:3988,c:2,cc:false}],
+      index:50,
+      selected:false,
+      pcount:1
+    }
+  },
   methods: {
+    dels(){
+      
+    },
     back() {
       this.$router.go(-1); //返回上一层
     },
-    selected(e){
-      //事件委托
-      var gwc=document.getElementsByClassName('gwc_product')[0];
-      if(e.target.nodeName=="I"){
-        if(e.target.style.backgroundPositionY=='-89px'){
-          e.target.style.backgroundPositionY='-70px';
-        }else{
-          e.target.style.backgroundPositionY='-89px';
+   splist(e) {
+      if (e.target.nodeName == "INPUT") {
+        if (e.target.checked == false) {
+          this.selected = false;
+        } else {
+          if (document.querySelector(".selected>input:not(:checked)") == null) {
+            this.selected = true;
+          }
+        }
+      };
+      if(e.target.dataset.ys=="reduce"){
+        this.carts[e.target.dataset.i].c-=1;
+        if(this.carts[e.target.dataset.i].c==0){
+          this.carts.splice(e.target.dataset.i,1);
+        }
+      }else if(e.target.dataset.ys=="plus"){
+        this.carts[e.target.dataset.i].c+=1;
+      };
+      if(e.target.innerHTML=="删除"){
+        this.carts.splice(e.target.dataset.i,1);
+      }
+    },
+    selectAll(){
+      for(var item of this.carts){
+        item.cc=!this.selected;
+      }
+    }
+  },
+  computed:{
+    total(){
+      var total=0;
+      for(var p of this.carts){
+        if(p.cc){
+          total+=p.c*p.p
         }
       }
-      console.log(1);
+      return total;
     }
-  }
+  } 
 };
 </script>
 <style scoped>
+.cart_container {
+  overflow: hidden;
+}
+/* 底部总价计算 */
+.gwc_count > div:last-child > button {
+  outline: none;
+  border: none;
+  padding: 0.8rem;
+  background-image: linear-gradient(135deg, #f2140c, #f2270c 70%, #f24d0c);
+  color: #fff;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  border-radius: 0.1rem;
+}
+.gwc_count > div:last-child > span > span {
+  color: #333;
+}
+.gwc_count > div:last-child > span {
+  color: #f2270c;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.gwc_count > div:first-child {
+  margin-left: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gwc_count > div > span {
+  font-size: 0.9rem;
+  color: #999;
+}
+.gwc_count {
+  width: 100%;
+  border-top: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.selected{
+  padding: .5rem;
+}
+.selected>span{
+  left: 12px !important;
+   top: 10px !important;
+}
+.selectall,.selected{
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.selectall>span,.selected>span{
+  left: 0;
+  top: 0;
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../assets/jd-sprites.png") no-repeat;
+  background-size: 200px 200px;
+  background-position-x: -179px;
+  background-position-y: -89px;
+  z-index: 0;
+} 
+.selectall>input[type='checkbox']:checked+span::before,.selected>input[type='checkbox']:checked+span::before{
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../assets/jd-sprites.png") no-repeat;
+  background-size: 200px 200px;
+  background-position-x: -179px;
+  background-position-y: -54px;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+input[type='checkbox'] {
+  width: 0px;
+  height: 0px;
+}
 /* 商品条目 */
-.price>span{
+.price > span {
   font-size: 1rem;
   font-weight: bold;
   color: #f2270c;
 }
-.pro-detail>div:last-child{
+.pro-detail > div:last-child {
   text-align: right;
   color: #999;
-  margin-top: .3rem;
+  margin-top: 0.3rem;
 }
-.pro-detail>div:last-child>span{
-  margin-right: .5rem;
+.pro-detail > div:last-child > span {
+  margin-right: 0.5rem;
 }
 .num::before {
   content: "";
@@ -94,7 +236,7 @@ export default {
   margin-top: 1px;
 }
 .num {
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   font-size: 14px;
   -webkit-appearance: none;
   border: none;
@@ -134,7 +276,7 @@ export default {
 .price {
   display: flex;
   justify-content: space-between;
-  padding: .5rem .5rem .3rem 0;
+  padding: 0.5rem 0.5rem 0.3rem 0;
 }
 /* 加号 */
 .plus::after {
@@ -190,7 +332,7 @@ export default {
 .gwc_product {
   display: flex;
   font-size: 0.9rem;
-  padding: .5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   border-bottom: 1px solid #eee;
 }
 .proimg > img {
@@ -201,15 +343,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.proimg > i {
-  display: block;
-  width: 20px;
-  height: 20px;
-  background: url("../assets/jd-sprites.png") no-repeat;
-  background-size: 200px 200px;
-  background-position-x: -179px;
-  background-position-y: -89px;
-}
+
 /* 条目二 */
 .bjdw > div {
   display: flex;
@@ -219,7 +353,7 @@ export default {
   display: block;
   width: 15px;
   height: 15px;
-  background: ur1("../assets/jd-sprites.png");
+  background: url('../assets/jd-sprites.png');
   background-size: 180px 180px;
   background-position: -134px -27px;
 }

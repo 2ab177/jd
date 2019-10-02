@@ -4,7 +4,7 @@
       <span @click="back" class="back"></span>
       <p>京东登录</p>
     </div>
-    <input  @input="canC" v-focus v-model="uname" class="uname" type="text" placeholder="用户名/邮箱/已验证手机">
+    <input  @input="canC" v-focus v-model="uname" class="uname" type="text" placeholder="请输入注册手机号码">
     <div class="pwd">
       <input @input="canC" v-model="upwd" type="password" placeholder="请输入密码">
       <a href="">忘记密码</a>
@@ -24,6 +24,8 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
+import { Dialog } from "vant";
 export default {
   data(){
     return {
@@ -33,13 +35,32 @@ export default {
       click:true
     }
   },
+  components: {
+    [Dialog.Component.name]: Dialog.Component
+  }, 
   methods:{
     back(){
       this.$router.go(-1);//返回上一层
     },
     login(){
-      //函数节流
-      
+      //任意一项为空不执行后面函数
+      if (this.uname == "" || this.upwd == "") {
+        return;
+      }
+      //验证手机格式
+      if (!/^1[3-9]\d{9}$/.test(this.uname)) {
+        Dialog.alert({
+          message: "手机号码格式错误"
+        });
+        return;
+      }
+      //验证密码格式
+      if (!/^[a-zA-Z0-9]{6,12}$/.test(this.upwd)) {
+        Dialog.alert({
+          message: "请输入六至十二位密码，包含数字字母"
+        });
+        return;
+      }
     },
     canC() {
       //函数防抖
