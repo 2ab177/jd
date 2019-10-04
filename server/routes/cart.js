@@ -13,7 +13,8 @@ router.get("/addcart", (req, res) => {
 	var uid=req.user.id;
   var lid = req.query.lid;
   var price = req.query.price;
-  var lname = req.query.lname;
+  var title = req.query.title;
+  var simg = req.query.simg;
   //console.log(lid + ":" + price + ":" + lname)
   //4:创建查询sql:当前用户是否购买此商品
   var sql ="select id from jd_cart where uid=? and lid=?"
@@ -21,7 +22,7 @@ router.get("/addcart", (req, res) => {
   pool.query(sql,[uid,lid],(err,result)=>{
     if(err) throw err;
     if(result.length==0){
-      var sql =`insert into jd_cart values(null,${lid},${price},1,'${lname}',${uid})`;
+      var sql = `insert into jd_cart values(null,${lid},${price},1,'${title}','${simg}',${uid},false)`;
     }else{
       var sql =`update jd_cart set count=count+1 where uid=${uid} and lid=${lid}`;
     }
@@ -41,10 +42,10 @@ router.get("/addcart", (req, res) => {
 })
 router.get("/carts",(req,res)=>{
 	var uid=req.user.id;
-  var sql ="select id,lname,price,count from jd_cart where uid=?";
+  var sql ="select price,title,count,simg,ischecked from jd_cart where uid=?";
   pool.query(sql,[uid],(err,result)=>{
     if(err) throw err;
-    res.send({code:1,msg:"查询成功",data:result});
+    res.send({ code: 1, msg: "查询成功", data: result });
   })
 })
 //功能五:删除购物车表中指定的数据

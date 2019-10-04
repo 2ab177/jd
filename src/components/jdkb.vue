@@ -64,11 +64,3 @@
     align-items: center;
   }
 </style>
-
-        
-
-        
-    
-        
-  
-          

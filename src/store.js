@@ -5,31 +5,30 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cid:0,
-    searchKws:"",
     uname:"",
-    islogin:false
+    islogin: sessionStorage.getItem('isLogin') ||localStorage.getItem('isLogin') || false
   },
   //读取状态
-  /*getters:{
-    cid:(state)=>{
-      return state.cid;
-    }
-  },*/
-  //修改状态值
-  mutations: {
-    setUname(state,uname){
-      state.uname=uname;
+  getters: {//集中获取数据函数
+    getLogin(state) {//特殊：所有函数都有参数
+      return state.islogin;
     },
-    setIslogin(state,islogin){
-      state.islogin=islogin;
+  },
+  mutations: {//集中修改数据函数
+    llogin(state) {
+      localStorage.setItem("isLogin", true);
+      state.islogin = true;
     },
-    cityAlert:(state,cid)=>{
-      state.cid=cid;
-      localStorage.setItem('cid',cid);
+    slogin(state){
+      sessionStorage.setItem("isLogin", true);
+      state.islogin=true;
     },
-    search(state,searchKws){
-      state.searchKws=searchKws;
+    loginout(state){
+      localStorage.removeItem("isLogin");
+      sessionStorage.removeItem("isLogin");
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      state.islogin = false;
     }
   },
   actions: {

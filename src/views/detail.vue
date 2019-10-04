@@ -1,17 +1,16 @@
 <template>
   <div class="detail">
     <!-- 返回顶部 -->
-    <div @click="backtop" class="backtop">
-    </div>
+    <div @click="backtop" class="backtop"></div>
     <!-- 商品导航 -->
-    <pronav />
+    <pronav :title="title" :price="price" :simg="simg" :lid="lid" />
     <!-- 顶部app推广 -->
     <apptg />
     <!-- 商品轮播图 -->
     <div class="pro_carousel">
       <div class="carousel">
         <van-swipe indicator-color="#e4393c">
-          <van-swipe-item v-for="(item,i) of imgs" :key="i">
+          <van-swipe-item v-for="(item,i) of carimgs" :key="i">
             <img :src="require(`../assets/shangpin/${item}.jpg`)" alt />
           </van-swipe-item>
         </van-swipe>
@@ -19,13 +18,13 @@
       <!-- 轮播图上方导航条 -->
       <div class="pro_nav">
         <div>
-          <router-link to="/"><span class="pro_navspan"></span></router-link>
-          <!-- <div>
-            <span>商品</span>
-            <span>评价</span>
-            <span>详情</span>
-            <span>推荐</span>
-          </div> -->
+          <span class="pro_navspan" @click="backnext"></span>
+          <div>
+            <span @click="backtop">商品</span>
+            <span @click="topj">评价</span>
+            <span @click="toxq">详情</span>
+            <span @click="totj">推荐</span>
+          </div>
           <span class="pro_navspan about"></span>
         </div>
       </div>
@@ -36,7 +35,7 @@
       <div class="price">
         <div class="price_detail">
           <span>￥</span>
-          <span>3988.00</span>
+          <span>{{price.toFixed(2)}}</span>
         </div>
         <div>
           <div>
@@ -52,11 +51,10 @@
       <!-- 商品标题 -->
       <div class="title">
         <img class="title_icon1" src="../assets/zy2.png" alt />
-        <img class="title_icon2" src="../assets/jpsj.png" alt />
-        <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
+        <span>{{title}}</span>
       </div>
       <div class="title_detail">
-        <span>【京东旗舰店+华为官方直供：全国联保+多重好礼(可联系客服折现)】【赠：10000毫安移动电源+真无线双耳蓝牙耳机+高品质运动手环等好礼】华为P30pro</span>
+        <span>{{prodetail}}</span>
         <span class="more_detail">查看&gt;</span>
       </div>
     </div>
@@ -66,10 +64,10 @@
       <span>免举证退换货 原厂维修</span>
     </div>
     <!-- 优惠和白条 -->
-    <div class="yh_bt">
-      <div class="youhui">
+    <div class="youhui">
+      <div>
         <span>优惠</span>
-        <div class="youhui_detail">
+        <div>
           <p>
             <span>赠品</span> 中大惠农 zhongdahuinong 礼品卡节日礼品册团购提货卡券268型自选购物卡册 X1
           </p>
@@ -94,7 +92,7 @@
       <div>
         <span>已选</span>
         <div>
-          <p>天空之镜,8GB+128GB,标准版,1个</p>
+          <p>{{guige}}</p>
           <p>本商品支持保障服务,京东服务,点击可选服务</p>
         </div>
         <span></span>
@@ -141,7 +139,7 @@
             <div class="gou_marleft">
               <span></span>
               <span>京尊达</span>
-            </div >
+            </div>
             <div class="gou_marleft">
               <span></span>
               <span>京准达</span>
@@ -175,36 +173,19 @@
       <div class="ar_detail">
         <div class="ar_juti">
           <div>
-            <span>清晰度高(1901)</span>
-            <span>流畅至极(1387)</span>
-            <span>拍摄功能(1235)</span>
-            <span>拍摄功能(1235)</span>
-            <span>拍摄功能(1235)</span>
-            <span>拍摄功能(1235)</span>
+            <span v-for="(item,i) of jp" :key="i">{{item}}</span>
           </div>
-          <div class="ardetail">
+          <div v-for="(item,i) of xp" :key="i" class="ardetail">
             <div>
               <div>
                 <img src="../assets/user.png" alt />
-                <span>用户一</span>
+                <span>{{i==1?'用户二':'用户一'}}</span>
                 <img src="../assets/vip.png" alt />
                 <img src="../assets/fivestar.png" alt />
               </div>
               <span>2019-07-21</span>
             </div>
-            <span>手机质量非常好，外观非常漂亮，尺寸大小适合女性，男性建议mate20，拍照清晰，逼格高，自带算法，画面增强，随手拍，竟显大片本色，颜值高，自拍，旅游神器</span>
-          </div>
-          <div class="ardetail">
-            <div>
-              <div>
-                <img src="../assets/user.png" alt />
-                <span>用户一</span>
-                <img src="../assets/vip.png" alt />
-                <img src="../assets/fivestar.png" alt />
-              </div>
-              <span>2019-07-21</span>
-            </div>
-            <span>手机质量非常好，外观非常漂亮，尺寸大小适合女性，男性建议mate20，拍照清晰，逼格高，自带算法，画面增强，随手拍，竟显大片本色，颜值高，自拍，旅游神器</span>
+            <span>{{item}}</span>
           </div>
           <!-- 更多评价 -->
           <div class="more_ar">
@@ -231,50 +212,148 @@
         <span>规格参数</span>
         <span>售后保障</span>
       </div>
-        <img src="../assets/shangpin/p30_detail1.jpg" alt />
-      <img src="../assets/shangpin/p30_detail2.jpg" alt />
+      <img
+        v-for="(item,i) of detimgs"
+        :key="i"
+        :src="require(`../assets/shangpin/${item}.jpg`)"
+        alt
+      />
     </div>
   </div>
 </template>
 <script>
-import apptg from '../components/app_tg.vue'
-import pronav from "../components/pro_nav"
+import apptg from "../components/app_tg.vue";
+import pronav from "../components/pro_nav";
 export default {
   data() {
     return {
       mdtime: new Date(),
-      imgs: [
-        "p30_1",
-        "p30_2",
-        "p30_3",
-        "p30_4",
-        "p30_5",
-        "p30_6",
-        "p30_7",
-        "p30_8",
-        "p30_9",
-        "p30_10"
-      ]
+      guige: "",
+      price: 0,
+      title: "",
+      prodetail: "",
+      carimgs: [],
+      detimgs: [],
+      jp: [],
+      xp: [],
+      simg:"",
+      lid:""
     };
   },
+  created() {
+    this.loadDetail();
+  },
+  mounted() {
+    this.backtop();
+    window.addEventListener("scroll", this.topnav);
+  },
+  //销毁页面时移除绑定在window的事件监听
+  destroyed(){
+    window.removeEventListener("scroll",this.topnav);
+  },  
   components: {
     pronav,
     apptg
   },
-  methods:{
-    backtop(){
-      window.scrollTo(0,0);
+  methods: {
+    totj(){
+      window.scrollTo(0, 2447);
+    },
+    toxq(){
+      window.scrollTo(0, 1380);
+    },
+    topj(){
+      window.scrollTo(0, 928);
+    },
+    topnav() {
+      var nd = document.querySelector(".pro_nav>div>div");
+      var s1 = document.getElementsByClassName("pro_navspan")[0];
+      var s2 = document.getElementsByClassName("about")[0];
+      var fd = document.getElementsByClassName("pro_nav")[0];
+      var st = document.documentElement.scrollTop || document.body.scrollTop;
+      var ss=document.querySelectorAll('.pro_nav>div>div>span');
+      if (st > 48) {
+        fd.style.position = "fixed";
+        nd.style.display = "flex";
+        fd.style.background = "#fff";
+        s1.style.backgroundImage = "url('back_b.png') ";
+        s1.style.backgroundColor = "#fff";
+        s2.style.backgroundImage = "url('threeDianb.png') ";
+        s2.style.backgroundColor = "#fff";
+      } else {
+        fd.style.position = "";
+        nd.style.display = "";
+        fd.style.background = "";
+        s1.style.backgroundImage = "";
+        s1.style.backgroundColor = "";
+        s2.style.backgroundImage = "";
+        s2.style.backgroundColor = "";
+      }
+      if(st>=0&&st<=927){
+        for(var item of ss){
+          item.style.color='#333';
+        }
+        ss[0].style.color='#e4393c';
+      }
+      if(st>=928&&st<=1380){
+        for(var item of ss){
+          item.style.color='#333';
+        }
+        ss[1].style.color='#e4393c';
+      }
+      if(st>=1380&&st<=2446){
+        for(var item of ss){
+          item.style.color='#333';
+        }
+        ss[2].style.color='#e4393c';
+      }
+      if(st>=2447){
+        for(var item of ss){
+          item.style.color='#333';
+        }
+        ss[3].style.color='#e4393c';
+      }
+    },
+    loadDetail() {
+      this.axios
+        .get("/detail", {
+          params: {
+            lid: this.$route.params.lid
+          }
+        })
+        .then(res => {
+          this.title = res.data[0].title;
+          this.guige = res.data[0].guige;
+          this.prodetail = res.data[0].details;
+          this.price = res.data[0].price;
+          this.simg=res.data[0].smproimg;
+          this.lid=res.data[0].lid;
+          var cs = res.data[0].carimg.split(",");
+          this.carimgs = cs;
+          var jp = res.data[0].jianping.split(",");
+          this.jp = jp;
+          var delimg = res.data[0].xiangimg.split(",");
+          this.detimgs = delimg;
+          var xp = res.data[0].xiangping.split(",");
+          this.xp = xp;
+        });
+    },
+    backtop() {
+      window.scrollTo(0, 0);
+    },
+    backnext() {
+      this.$router.go(-1);
     }
   }
 };
 </script>
 <style scoped>
 /* 返回顶部 */
-.backtop{
+.backtop {
   width: 40px;
   height: 40px;
-  border-radius: .2rem;
-  background:url('../assets/backtop.png') rgba(0, 0, 0, .7) no-repeat;
+  border-radius: 0.2rem;
+  background: url("../assets/backtop.png") rgba(0, 0, 0, 0.7) no-repeat;
   background-size: 24px 24px;
   background-position: center center;
   position: fixed;
@@ -283,7 +362,7 @@ export default {
   z-index: 1;
 }
 /* 详情图片 */
-.detail_img> img {
+.detail_img > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -298,7 +377,7 @@ export default {
   display: flex;
   border-bottom: 1px solid #ddd;
 }
-.detail_img > div > span:first-child{
+.detail_img > div > span:first-child {
   color: #e4393c;
 }
 .detail_img > div > span {
@@ -541,34 +620,22 @@ export default {
   padding-bottom: 50px;
 }
 /* 优惠 */
-.youhui_detail > p:last-child > span:first-child {
-  border-color: #f3d4a8;
-  color: #de8c17;
-  margin-right: 0.2rem;
+.youhui > div > div > p > span:nth-child(2) {
+  margin-left: 0.4rem;
 }
-.youhui_detail > p > span {
+.youhui > div > div > p > span {
   display: inline-block;
-  margin: 0;
-  border: 1px solid #f5b5b6;
+  border: 1px solid #e4393c;
   color: #e4393c;
-  padding: 0 .1rem;
+  padding: 0 2px;
+  font-size: 0.7rem;
 }
-.youhui > span {
-  z-index: 1;
-}
-.youhui > span:first-child {
+.youhui > div > span:first-child {
   margin-top: 0.6rem;
+  width: 2.9rem;
   color: #999;
 }
-.youhui_detail > p {
-  margin: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
-}
-.yh_bt > div > span:last-child {
-  display: inline-block;
+.youhui > div > span:last-child {
   background: url("../assets/three_black.png") no-repeat;
   background-size: 100%;
   margin-top: 1rem;
@@ -577,26 +644,32 @@ export default {
   height: 10px;
 }
 .youhui {
-  display: flex;
+  background: #fff;
+  padding-left: 0.6rem;
   font-size: 0.8rem;
-  position: relative;
-  justify-content: space-between;
-  height: 65px;
+  margin-bottom: 0.5rem;
+}
+.youhui > div > div > p:last-child {
+  color: #999;
+}
+.youhui > div > div > p {
+  margin: 0.5rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.youhui > div {
+  display: flex;
   border-bottom: 1px solid #eee;
 }
-.youhui_detail {
-  width: 100%;
-  position: absolute;
-  padding: 0 2.4rem;
-  box-sizing: border-box;
-  z-index: 0;
-  border-bottom: #eee;
+.youhui > div > span {
+  display: inline-block;
 }
-.yh_bt {
-  padding-left: 0.6rem;
-  margin: 0.5rem 0;
-  background: white;
+.youhui > div > div {
+  flex: 1;
+  overflow: hidden;
 }
+
 /* 放心购 */
 .fxg {
   display: flex;
@@ -639,6 +712,7 @@ export default {
   font-weight: bold;
 }
 .title_icon1 {
+  margin-right: 0.5rem;
   width: 26px;
   height: 15px;
 }
@@ -685,17 +759,17 @@ export default {
   display: block;
 }
 /* 轮播图上方导航条 */
-/* .pro_nav>div>div>span{
-  
+.pro_nav > div > div > span:first-child {
+  color: #e4393c;
 }
-.pro_nav>div>div{
+.pro_nav > div > div {
   flex: 1;
-  display: flex;
-  font-size: .9rem;
+  display: none;
+  font-size: 0.9rem;
   align-items: center;
   justify-content: space-around;
-  color:#333;
-} */
+  color: #333;
+}
 .pro_carousel {
   position: relative;
   z-index: 0;
@@ -705,18 +779,12 @@ export default {
   left: 0;
   top: 0;
   position: absolute;
-  z-index: 10;
 }
 .pro_nav > div {
   display: flex;
   justify-content: space-between;
 }
-.about {
-  background: url("../assets/threeDian.png") #666 no-repeat !important;
-  background-size: 75% !important;
-  background-position: center center !important;
-}
-.pro_navspan{
+.pro_navspan {
   display: block;
   width: 1.9rem;
   height: 1.9rem;
@@ -725,5 +793,10 @@ export default {
   background-size: 60%;
   background-position: center center;
   margin: 0.3rem;
+}
+.about {
+  background: url("../assets/threeDian.png") #666 no-repeat;
+  background-size: 75%;
+  background-position: center center;
 }
 </style>

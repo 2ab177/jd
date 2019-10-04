@@ -23,7 +23,7 @@ server.use(bodyParser.urlencoded({extended:false}));
 //5.2:每请求是否验证true
 //要实现手机能够访问地址要加上本机ip地址 查看本机ip地址命令ipconfig/all
 server.use(cors({
-  origin: ["http://127.0.0.1:8080", "http://localhost:8080"],
+  origin: ["http://192.168.1.54:8080","http://127.0.0.1:8080", "http://localhost:8080",],
   credentials: true
 }))
 //session一定要在所有请求之前;
@@ -64,18 +64,19 @@ server.post("/login", (req, res) => {
   //6.1:接收网页传递数据 用户名和密码
   var u = req.body.uname;
   var p = req.body.upwd;
+  var r=req.body.remember;
+  console.log(u, p,r);
   //6.2:创建sql
-  var sql = "SELECT id FROM jd_login";
-  sql += " WHERE uname = ? AND upwd = md5(?)";
+  var sql = "SELECT id FROM jd_login WHERE uname = ? AND upwd = ?";
   //6.3:执行sql语句并且获取返回结果
   pool.query(sql, [u, p], (err, result) => {
     //6.4:判断登录是否成功
     if (err) throw err;
     //6.5:将结果返回网页
     if (result.length == 0) {
-      res.send({ code: -1, msg: "用户名或密码有误" })
+      res.send({ code: -1, msg: "用户名或密码有误"})
     } else {
-      res.send({ code: 1, msg: "登录成功" ,token:jwt.generateToken(result[0])});
+      r === "false" ? res.send({ code: 1, msg: "登录成功", token: jwt.generateToken(result[0]) }) : res.send({ code: 1, msg: "登录成功", token: jwt.generateToken(result[0]), remember: "true"})
     }
   });
 })
@@ -83,21 +84,37 @@ server.post("/reg", (req, res) => {
   //6.1:接收网页传递数据 用户名和密码
   var u = req.body.uname;
   var p = req.body.upwd;
-  //6.2:创建sql
-  var sql = "INSERT INTO jd_login VALUES(null,?,md5(?))";
-  //6.3:执行sql语句并且获取返回结果
-  pool.query(sql, [u, p], (err, result) => {
-    //6.4:判断注册是否成功
+  //创建查询是否已注册
+  var sql='select uname from jd_login where uname=?';
+  pool.query(sql,[u],(err,result)=>{
     if (err) throw err;
-    //6.5:将结果返回网页
-    if (result.affectedRows > 0) {
-      res.send({ code: 1, msg: "注册成功" })
+    console.log(result);
+    if(result.length>0){
+      res.send({code:-1,msg:'该号码已注册'});
+    }else{
+      //注册
+      var sql = 'INSERT INTO jd_login VALUES(null,?,?)';
+      pool.query(sql, [u, p], (err, result)=>{
+        if (err) throw err;
+        if (result.affectedRows > 0){
+          res.send({ code: 1, msg: '注册成功' });
+        }
+      })
     }
-  });
+  })
 })
 server.get('/carousel', (req, res) => {
   var sql = "SELECT cimg FROM jd_carousel";
   pool.query(sql, [], (err, result) => {
+    //6:获取返回结果发送客户端
+    if (err) throw err;
+    res.send(result);
+  });
+})
+server.get('/detail', (req, res) => {
+  var lid=req.query.lid;
+  var sql = "SELECT smproimg,lid,price,details,title,guige,jianping,xiangping,xiangimg,carimg FROM jd_product where lid=?";
+  pool.query(sql, [lid], (err, result) => {
     //6:获取返回结果发送客户端
     if (err) throw err;
     res.send(result);
@@ -133,7 +150,7 @@ server.get("/product", (req, res) => {
     ps = 4;
   }
   //4:创建sql语句
-  var sql = "SELECT title,typeimg,price,smproimg,buytype";
+  var sql = "SELECT lid,title,typeimg,price,smproimg,buytype";
   sql += " FROM jd_product";
   sql += " LIMIT ?,?";
   var offset = (pno - 1) * ps;//起始记录数 ?

@@ -51,28 +51,35 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import { Dialog } from "vant";
+//引入md5模块加密密码
+import md5 from "md5";
+//引入vant弹出框组件
+import { Dialog, Toast } from "vant";
 export default {
   data() {
     return {
       uphone: "",
       upwd: "",
       aupwd: "",
-      timer:undefined
+      timer: undefined,
+      cclick: true
     };
   },
   methods: {
-    //点击同意后移除模态框
-    back(){
-      this.$router.go(-1);//返回上一层
+    //md5加密方法
+    md5,
+    //返回上一页
+    back() {
+      this.$router.go(-1); //返回上一层
     },
+    //点击同意后移除模态框
     arrge() {
       var mtk = document.getElementsByClassName("reg")[0];
       mtk.remove();
       var iname = document.getElementsByTagName("input")[0];
       iname.focus();
     },
+    //不同意返回登录页
     disarrge() {
       this.$router.push("/login");
     },
@@ -101,6 +108,40 @@ export default {
           message: "两次密码输入不一致"
         });
         return;
+      }
+      if (this.cclick) {
+        //函数节流
+        this.cclick = false;
+        this.axios
+          .post("/reg", {
+            uname: this.uphone,
+            upwd: this.md5(this.upwd)
+          })
+          .then(res => {
+            if (res.data.code === 1) {
+              this.cclick = true;
+              Dialog.alert({
+                title:'注册成功',
+                message: "点击确定自动登录并返回首页"
+              }).then(() => {
+                //自动登录
+                this.axios
+                  .post("/login", {
+                    uname: this.uphone,
+                    upwd: this.md5(this.upwd),
+                    remember:'false'
+                  })
+                  .then(res => {
+                    if (res.data.code === 1) {
+                      this.$router.push("/");
+                    }
+                  });
+              });
+            } else {
+              Toast("该号码已注册");
+              this.cclick = true;
+            }
+          });
       }
     },
     canC() {

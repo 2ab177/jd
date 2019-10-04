@@ -1,17 +1,19 @@
 <template>
   <div class="cart_container">
     <!-- 底部总价计算 -->
-    <div v-if="false" class="gwc_count">
+    <!-- 登录显示 -->
+    <div v-if="$store.getters.getLogin" class="gwc_count">
       <div>
         <label class="selectall">
-          <input type="checkbox" v-model="selected" @click="selectAll">
+          <input type="checkbox" v-model="selected" @click="selectAll" />
           <span></span>
         </label>
         <span>全选</span>
       </div>
       <div>
         <span>
-          <span>总计:</span> ￥{{total.toFixed(2)}}
+          <span>总计:</span>
+          ￥{{total.toFixed(2)}}
         </span>
         <button>去结算</button>
       </div>
@@ -24,7 +26,8 @@
         <span class="tomore"></span>
       </div>
       <!-- 条目二 -->
-      <div v-if="false" class="bjdw">
+      <!-- 登录显示 -->
+      <div v-if="$store.getters.getLogin" class="bjdw">
         <div>
           <span></span>
           <span>厦门市思明区</span>
@@ -32,22 +35,23 @@
         <span @click="dels">删除选中商品</span>
       </div>
       <!-- 商品条目 -->
-      <div v-if="false" class="product_list" @click="splist">
-        <div v-for="(item,i) of carts" :key="i"  class="gwc_product">
+      <!-- 登录显示 -->
+      <div v-if="$store.getters.getLogin" class="product_list" @click="splist">
+        <div v-for="(item,i) of carts" :key="i" class="gwc_product">
           <div class="proimg">
             <label class="selected">
-              <input v-model="item.cc" type="checkbox" >
+              <input v-model="item.ischecked" type="checkbox" />
               <span></span>
             </label>
-            <img src="../assets/wntj/1_sm.jpg" alt />
+            <img :src="require(`../assets/wntj/${item.simg}.jpg`)" alt />
           </div>
           <div class="pro-detail">
-            <span>华为P30手机 【白条6期免息0首付+20天价保+现货当天发+1年碎屏险】 天空之境 全网通 8G+128G(6期免息)</span>
+            <span>{{item.title}}</span>
             <div class="price">
-              <span>{{item.p.toFixed(2)}}</span>
+              <span>{{item.price.toFixed(2)}}</span>
               <div>
                 <span class="reduce" :data-i="i" data-ys="reduce"></span>
-                <input v-model="item.c" class="num" type="number" />
+                <input v-model="item.count" class="num" type="number" />
                 <span :data-i="i" class="plus" data-ys="plus"></span>
               </div>
             </div>
@@ -59,32 +63,82 @@
         </div>
       </div>
     </div>
-    <div class="wlogin">
+    <!-- 未登录显示以下内容 -->
+    <div v-if="!$store.getters.getLogin" class="nologin">
       <div>
         <span>登录后可以同步购物车中的商品</span>
-        <router-link to="/login"><button>登录</button></router-link>
+        <router-link to="/login">
+          <button>登录</button>
+        </router-link>
+      </div>
+      <div>
+        <img src="../assets/gwc.png" alt />
+        <p>登录后可同步购物车中商品</p>
+      </div>
+    </div>
+    <!-- 常驻内容：商品推荐 -->
+    <div class="youwant">
+      <span>可能你还想要</span>
+    </div>
+    <div class="wntj" :style="$store.getters.getLogin?'padding-bottom:47px':''">
+      <div class="wntj-left" v-for="(item,i) of products" :key="i">
+        <router-link :to="`/detail${item.lid}`">
+          <img class="wntj_proimg" :src="require(`../assets/wntj/${item.smproimg}.jpg`)" alt />
+        </router-link>
+        <div>
+          <div>
+            <img :src="require(`../assets/${item.typeimg}.png`)" alt />
+          </div>
+          <span>{{item.title}}</span>
+        </div>
+        <div>
+          <span>￥{{item.price.toFixed(2)}}</span>
+          <span v-show="item.buytype!=null">{{item.buytype}}</span>
+          <span>看相似</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  data(){
+  data() {
     return {
-      carts:[{p:3988,c:2,cc:false},{p:3988,c:2,cc:false}],
-      index:50,
-      selected:false,
-      pcount:1
-    }
+      products: [],
+      carts: [],
+      selected: false,
+    };
+  },
+  created() {
+    this.gproducts();
+    this.getcart();
   },
   methods: {
-    dels(){
-      
+    getcart(){
+      if(this.$store.getters.getLogin){
+        this.axios.get('/cart/carts')
+        .then(res=>{
+          this.carts=res.data.data;
+        })
+      }
     },
+    gproducts() {
+      this.axios
+        .get("/product", {
+          params: {
+            pno: 1,
+            pageSize: 8
+          }
+        })
+        .then(res => {
+          this.products = res.data.data;
+        });
+    },
+    dels() {},
     back() {
       this.$router.go(-1); //返回上一层
     },
-   splist(e) {
+    splist(e) {
       if (e.target.nodeName == "INPUT") {
         if (e.target.checked == false) {
           this.selected = false;
@@ -93,39 +147,150 @@ export default {
             this.selected = true;
           }
         }
-      };
-      if(e.target.dataset.ys=="reduce"){
-        this.carts[e.target.dataset.i].c-=1;
-        if(this.carts[e.target.dataset.i].c==0){
-          this.carts.splice(e.target.dataset.i,1);
+      }
+      if (e.target.dataset.ys == "reduce") {
+        this.carts[e.target.dataset.i].c -= 1;
+        if (this.carts[e.target.dataset.i].c == 0) {
+          this.carts.splice(e.target.dataset.i, 1);
         }
-      }else if(e.target.dataset.ys=="plus"){
-        this.carts[e.target.dataset.i].c+=1;
-      };
-      if(e.target.innerHTML=="删除"){
-        this.carts.splice(e.target.dataset.i,1);
+      } else if (e.target.dataset.ys == "plus") {
+        this.carts[e.target.dataset.i].c += 1;
+      }
+      if (e.target.innerHTML == "删除") {
+        this.carts.splice(e.target.dataset.i, 1);
       }
     },
-    selectAll(){
-      for(var item of this.carts){
-        item.cc=!this.selected;
+    selectAll() {
+      for (var item of this.carts) {
+        item.ischecked = !this.selected;
       }
     }
   },
-  computed:{
-    total(){
-      var total=0;
-      for(var p of this.carts){
-        if(p.cc){
-          total+=p.c*p.p
+  computed: {
+    total() {
+      var total = 0;
+      for (var p of this.carts) {
+        if (p.ischecked) {
+          total += p.count * p.price;
         }
       }
       return total;
     }
-  } 
+  }
 };
 </script>
 <style scoped>
+/* 为你推荐 */
+.wntj_img {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.1rem;
+}
+.wntj > div > div:last-child > span:last-child {
+  font-size: 0.7rem;
+  border: 1px solid #bfbfbf;
+  color: #949494;
+  padding: 0.1rem 0.2rem;
+}
+.wntj > div > div:last-child > span:nth-child(2) {
+  border: 1px solid #e4393c;
+  color: #e4393c;
+  font-size: 8px;
+  padding: 0 3px;
+  margin-right: 5px;
+}
+.wntj > div > div:last-child {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+}
+.wntj > div > div {
+  margin: 0.5rem 0;
+}
+.wntj > div > div:last-child > span {
+  font-size: 1rem;
+  color: #e4393c;
+  font-weight: bold;
+}
+.wntj-left {
+  border-right: 0.1rem solid #f6f6f6;
+}
+.wntj-right {
+  border-left: 0.1rem solid #f6f6f6;
+}
+.wntj {
+  margin-top: 1.2rem;
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+}
+.wntj > div > div {
+  display: flex;
+}
+.wntj > div > div:nth-child(2) > span {
+  font-size: 0.8rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.wntj > div > div:nth-child(2) > div > img {
+  width: 100%;
+}
+.wntj > div > div:nth-child(2) > div {
+  width: 49%;
+}
+.wntj_proimg {
+  width: 100%;
+}
+.wntj > div {
+  box-sizing: border-box;
+  width: 50%;
+  background: #fff;
+  margin-bottom: 0.1rem;
+}
+/* 未登录样式 */
+.youwant > span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -48px;
+  margin-bottom: -8px;
+  z-index: 2;
+  font-size: 0.8rem;
+  color: #999;
+  padding: 0 0.5rem;
+  background: #f6f6f6;
+  display: block;
+}
+.youwant {
+  position: relative;
+  height: 21px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0.5rem;
+}
+.nologin > div:nth-child(2) {
+  padding: 4.2rem;
+}
+.nologin > div:nth-child(2) > img {
+  width: 90px;
+  height: 90px;
+}
+.nologin > div:first-child button {
+  outline: none;
+  border: none;
+  background: #f2140c;
+  color: #fff;
+  padding: 0.4rem 1.3rem;
+  border-radius: 0.3rem;
+  margin-left: 0.5rem;
+}
+.nologin > div:first-child {
+  font-size: 0.9rem;
+  background: #fff;
+  padding: 0.9rem;
+}
+
 .cart_container {
   overflow: hidden;
 }
@@ -169,20 +334,24 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 999;
 }
-.selected{
-  padding: .5rem;
+.selected {
+  padding: 0.5rem;
 }
-.selected>span{
+.selected > span {
   left: 12px !important;
-   top: 10px !important;
+  top: 10px !important;
 }
-.selectall,.selected{
+.selectall,
+.selected {
   position: relative;
   width: 20px;
   height: 20px;
+  color: #fff;
 }
-.selectall>span,.selected>span{
+.selectall > span,
+.selected > span {
   left: 0;
   top: 0;
   position: absolute;
@@ -194,9 +363,10 @@ export default {
   background-position-x: -179px;
   background-position-y: -89px;
   z-index: 0;
-} 
-.selectall>input[type='checkbox']:checked+span::before,.selected>input[type='checkbox']:checked+span::before{
-  content: '';
+}
+.selectall > input[type="checkbox"]:checked + span::before,
+.selected > input[type="checkbox"]:checked + span::before {
+  content: "";
   display: block;
   width: 20px;
   height: 20px;
@@ -209,7 +379,7 @@ export default {
   top: 0;
   position: absolute;
 }
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 0px;
   height: 0px;
 }
@@ -236,17 +406,21 @@ input[type='checkbox'] {
   margin-top: 1px;
 }
 .num {
-  margin: 0 0.1rem;
+  margin: 0;
+  padding: 0;
+  margin: 0 .1rem;
   font-size: 14px;
   -webkit-appearance: none;
   border: none;
   width: 30px;
-  height: 18px;
+  height: 20px;
+  line-height: 20px;
   text-align: center;
   position: relative;
   float: left;
   background: #f6f6f6;
-  border-radius: 1px;
+  border-radius: 0;
+  -webkit-border-radius: 0;
 }
 /* 减号 */
 .reduce::after {
@@ -353,7 +527,7 @@ input[type='checkbox'] {
   display: block;
   width: 15px;
   height: 15px;
-  background: url('../assets/jd-sprites.png');
+  background: url("../assets/jd-sprites.png");
   background-size: 180px 180px;
   background-position: -134px -27px;
 }
@@ -388,6 +562,7 @@ input[type='checkbox'] {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #eee;
+  font-size: 1.1rem;
 }
 .jddl > span {
   font-size: 1.1rem;

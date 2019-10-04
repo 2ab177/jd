@@ -3,7 +3,7 @@ import qs from "qs";
 import store from './store'
 //要实现手机能够访问地址要加上本机ip地址 查看本机ip地址命令ipconfig/all
 const Axios=axios.create({
-  baseURL:"http://127.0.0.1:5050/",
+  baseURL:"http://192.168.1.54:5050/",
   withCredentials:true
 })
 Axios.interceptors.request.use(
@@ -37,19 +37,18 @@ Axios.interceptors.response.use(
     if(res.data.status==403){
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
-      store.commit("setIslogin",false);
-      store.commit("setUname","");
+      store.commit("loginout");
     }else if(res.data.code==-1){
-      store.commit("setIslogin",false);
-      store.commit("setUname","");
+      store.commit("loginout");
       //alert(res.data.msg+" 请先登录 !");
     }else if(res.data.token){
-      store.commit("setUname",res.data.uname);
-      store.commit("setIslogin",true);
-      if(res.remember==="true"){
+      if (res.data.remember==="true"){
+        console.log(res.data);
         localStorage.setItem("token",res.data.token);
+        store.commit("llogin");
       }else{
         sessionStorage.setItem("token",res.data.token);
+        store.commit("slogin");
       }
     }
     return res;

@@ -24,7 +24,9 @@
         <div class="input">
           <router-link to="/search">dell显示器</router-link>
         </div>
-        <router-link :to="islogin?'/login':'/cart'">{{islogin?'登录':'我的'}}</router-link>
+        <router-link
+          :to="$store.getters.getLogin?'/cart':'/login'"
+        >{{$store.getters.getLogin?'我的':'登录'}}</router-link>
       </div>
       <!-- 主要商品 -->
       <div>
@@ -105,13 +107,13 @@
             <span class="item">00</span>
             <span>:</span>
             <span class="item">
-              <span v-show="60-mstime.getMinutes()<10">0</span>
-              {{60-mstime.getMinutes()}}
+              <span v-show="59-mstime.getMinutes()<10">0</span>
+              <span>{{59-mstime.getMinutes()}}</span>
             </span>
             <span>:</span>
             <span class="item">
-              <span v-show="60-mstime.getSeconds()<10">0</span>
-              {{60-mstime.getSeconds()}}
+              <span v-show="59-mstime.getSeconds()<10">0</span>
+              <span>{{59-mstime.getSeconds()}}</span>
             </span>
           </div>
           <a href="javascript:;">更多秒杀</a>
@@ -199,9 +201,9 @@
       <!-- 为你推荐 -->
       <img class="wntj_img" src="../assets/88174b36f85283b6.png" alt />
       <div class="wntj">
-        <div  class="wntj-left" v-for="(item,i) of products" :key="i">
-          <router-link to>
-            <img  class="wntj_proimg" :src="require(`../assets/wntj/${item.smproimg}.jpg`)" alt />
+        <div class="wntj-left" v-for="(item,i) of products" :key="i">
+          <router-link :to="`/detail${item.lid}`">
+            <img class="wntj_proimg" :src="require(`../assets/wntj/${item.smproimg}.jpg`)" alt />
           </router-link>
           <div>
             <div>
@@ -233,7 +235,8 @@ export default {
       mrg: [],
       products: [],
       pno: 1,
-      canc:true
+      canc: true,
+      timer: ""
     };
   },
   components: {
@@ -245,33 +248,41 @@ export default {
     this.logined();
     this.gmiaosha();
     this.gmrg();
+    window.scrollTo(0,0);
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
     this.djs();
     window.addEventListener("scroll", this.gproducts);
   },
+  //销毁页面时移除绑定在window的事件监听
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.gproducts);
+  },
   methods: {
     gproducts() {
-      if(this.pno>2){
+      if (this.pno > 2) {
         return;
       }
       var st = document.documentElement.scrollTop || document.body.scrollTop;
       var wh = window.innerHeight;
       var sh = document.body.scrollHeight;
-      if (this.canc&&st + wh >= sh) {
-        this.canc=false;
-        this.axios.get("/product",{
-          params:{
-            pno:this.pno
-          }
-        })
-        .then(res => {
-          this.pno+=1;
-          console.log(this.pno);
-          this.products =this.products.concat(res.data.data);
-          this.canc=true;
-        });
+      //页面到底部时自动加载数据
+      if (this.canc && st + wh >= sh) {
+        //函数节流
+        this.canc = false;
+        this.axios
+          .get("/product", {
+            params: {
+              pno: this.pno
+            }
+          })
+          .then(res => {
+            this.pno += 1;
+            this.products = this.products.concat(res.data.data);
+            this.canc = true;
+          });
       }
     },
     gmrg() {
@@ -299,11 +310,11 @@ export default {
       }
     },
     djs() {
-      setInterval(() => {
+      this.timer = setInterval(() => {
         this.mstime = new Date();
       }, 1000);
     },
-    handleScroll: function() {
+    handleScroll() {
       var sTop = document.documentElement.scrollTop || document.body.scrollTop;
       if (sTop >= 48) {
         this.fixed = true;
@@ -311,7 +322,7 @@ export default {
         this.fixed = false;
       }
     },
-    scroll2: function() {
+    scroll2() {
       var sTop = document.documentElement.scrollTop || document.body.scrollTop;
       if (sTop > 0) {
         this.fixed = true;
@@ -319,7 +330,7 @@ export default {
         this.fixed = false;
       }
     }
-  }
+  },
 };
 </script>
 <style scoped>
