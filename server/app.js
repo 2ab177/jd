@@ -46,7 +46,6 @@ server.use((req, res, next)=>{
       res.send({status: 403, msg: '证书出错'})
     } else{
       req.user=result;
-			console.log(result);
       next();
     }
   } else {

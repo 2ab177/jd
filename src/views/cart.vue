@@ -50,33 +50,57 @@
             <div class="price">
               <span>{{item.price.toFixed(2)}}</span>
               <div>
-                <span class="reduce" :data-i="i" data-ys="reduce"></span>
-                <input v-model="item.count" class="num" type="number" />
-                <span :data-i="i" class="plus" data-ys="plus"></span>
+                <span class="reduce" :data-c="item.count" :data-id="item.id" data-ys="reduce"></span>
+                <!-- 用onkeyup使输入框只能输入数字 -->
+                <input
+                  @focus="getonum"
+                  @blur="changec"
+                  :data-i="i"
+                  :data-id="item.id"
+                  v-model="item.count"
+                  class="num"
+                  type="number"
+                  onkeyup="value=this.value.replace(/^\D+/g,'')"
+                />
+                <span :data-id="item.id" class="plus" data-ys="plus"></span>
               </div>
             </div>
             <div>
               <span>移入关注</span>
-              <span :data-i="i">删除</span>
+              <span :data-i="item.id">删除</span>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- 未登录显示以下内容 -->
-    <div v-if="!$store.getters.getLogin" class="nologin">
-      <div>
+    <div class="nologin">
+      <div v-if="!$store.getters.getLogin" class="pleasel">
         <span>登录后可以同步购物车中的商品</span>
         <router-link to="/login">
           <button>登录</button>
         </router-link>
       </div>
-      <div>
+      <div v-if="carts.length==0" class="cartnull">
         <img src="../assets/gwc.png" alt />
-        <p>登录后可同步购物车中商品</p>
+        <p>{{$store.getters.getLogin&&carts.length==0?'购物车是空的,去买点东西吧':'登录后可同步购物车中商品'}}</p>
       </div>
     </div>
     <!-- 常驻内容：商品推荐 -->
+    <div class="youwant">
+      <span>新用户福利</span>
+    </div>
+    <div class="xyhfl">
+      <div>
+        <div>
+          <img src="../assets/cart_ad.png" alt />
+          <span>新用户福利 ● 专属优惠礼包</span>
+          <img src="../assets/cart_ad.png" alt />
+        </div>
+        <button>一键领取</button>
+      </div>
+      <img src="../assets/yhq.png" alt />
+    </div>
     <div class="youwant">
       <span>可能你还想要</span>
     </div>
@@ -107,19 +131,64 @@ export default {
       products: [],
       carts: [],
       selected: false,
+      cclick: true,
+      originalnum: ""
     };
   },
   created() {
     this.gproducts();
     this.getcart();
+    window.scrollTo(0, 0);
   },
   methods: {
-    getcart(){
-      if(this.$store.getters.getLogin){
-        this.axios.get('/cart/carts')
-        .then(res=>{
-          this.carts=res.data.data;
-        })
+    getonum(e) {
+      this.originalnum = this.carts[e.target.dataset.i].count;
+    },
+    changec(e) {
+      if (!/^\d+$/.test(this.carts[e.target.dataset.i].count)) {
+        this.Toast("请输入一个整数");
+        this.carts[e.target.dataset.i].count=this.originalnum;
+      } else if (this.carts[e.target.dataset.i].count > 200) {
+        this.Toast("一次购买不能超过200件");
+        this.carts[e.target.dataset.i].count=this.originalnum;
+      } else {
+        //两次值不一样才发送请求
+        if (this.carts[e.target.dataset.i].count != this.originalnum) {
+          this.Toast.loading({
+            duration: 0, // 持续展示 this.Toast
+            forbidClick: true, // 禁用背景点击
+          });
+          this.axios
+            .get("/cart/changec", {
+              params: {
+                id: e.target.dataset.id,
+                count: this.carts[e.target.dataset.i].count
+              }
+            })
+            .then(res => {
+              if (res.data.code == 1) {
+                this.Toast.clear();
+                this.getcart();
+              }
+            });
+        }
+      }
+    },
+    getcart() {
+      if (this.$store.getters.getLogin) {
+        this.axios.get("/cart/carts").then(res => {
+          if (res.data.status === 403) {
+            this.$store.commit('loginout');
+            this.Dialog.alert({
+              title: "身份信息过期",
+              message: "请重新登录"
+            }).then(() => {
+              this.$router.push("/login");
+            });
+          } else {
+            this.carts = res.data.data;
+          }
+        });
       }
     },
     gproducts() {
@@ -134,11 +203,43 @@ export default {
           this.products = res.data.data;
         });
     },
-    dels() {},
+    dels() {
+      var arr = [];
+      for (var item of this.carts) {
+        if (item.ischecked) {
+          arr.push(item.id);
+        }
+      }
+      if (arr.length > 0) {
+        this.Dialog.confirm({
+          title: "删除多个商品",
+          message: "确定要删除吗"
+        })
+          .then(() => {
+            var id = arr.join();
+            this.axios
+              .get("/cart/delitems", {
+                params: {
+                  id
+                }
+              })
+              .then(res => {
+                if (res.data.code == 1) {
+                  this.getcart(); //刷新
+                }
+              });
+          })
+          .catch(() => {
+          });
+      } else {
+        this.Toast("请选择要删除的商品");
+      }
+    },
     back() {
       this.$router.go(-1); //返回上一层
     },
     splist(e) {
+      //事件委托
       if (e.target.nodeName == "INPUT") {
         if (e.target.checked == false) {
           this.selected = false;
@@ -149,15 +250,60 @@ export default {
         }
       }
       if (e.target.dataset.ys == "reduce") {
-        this.carts[e.target.dataset.i].c -= 1;
-        if (this.carts[e.target.dataset.i].c == 0) {
-          this.carts.splice(e.target.dataset.i, 1);
+        if (e.target.dataset.c == 1) {
+          this.Toast("该商品一件起售");
+        } else {
+           this.Toast.loading({
+            duration: 0, // 持续展示 this.Toast
+            forbidClick: true, // 禁用背景点击
+          });
+          this.axios("/cart/changec", {
+            params: {
+              id: e.target.dataset.id,
+              count: "count-1"
+            }
+          }).then(res => {
+            this.Toast.clear();
+            this.getcart();
+          });
         }
       } else if (e.target.dataset.ys == "plus") {
-        this.carts[e.target.dataset.i].c += 1;
+        this.Toast.loading({
+            duration: 0, // 持续展示 this.Toast
+            forbidClick: true, // 禁用背景点击
+          });
+          this.axios("/cart/changec", {
+            params: {
+              id: e.target.dataset.id,
+              count: "count+1"
+            }
+          }).then(res => {
+            this.Toast.clear();
+            this.getcart();
+          });
       }
-      if (e.target.innerHTML == "删除") {
-        this.carts.splice(e.target.dataset.i, 1);
+      if (e.target.innerHTML == "删除" && this.cclick) {
+        this.cclick = false;
+        this.Dialog.confirm({
+          title: "删除单个商品",
+          message: "确定要删除吗"
+        })
+          .then(() => {
+            this.axios
+              .get("/cart/delitem", {
+                params: {
+                  id: e.target.dataset.i
+                }
+              })
+              .then(res => {
+                if (res.data.code == 1) {
+                  this.Toast("删除成功");
+                  this.cclick = true;
+                  this.getcart();
+                }
+              });
+          })
+          .catch(() => {});
       }
     },
     selectAll() {
@@ -180,6 +326,47 @@ export default {
 };
 </script>
 <style scoped>
+/* 新用户福利 */
+.xyhfl > img {
+  display: block;
+  width: 33.33%;
+  height: 66px;
+  text-align: left;
+  margin-top: 0.9rem;
+}
+.xyhfl > div > button {
+  outline: none;
+  border: none;
+  height: 30px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 14px;
+  line-height: 30px;
+  background-image: linear-gradient(-90deg, #f2270c, #ff9574);
+  box-shadow: 0 5px 10px 0 rgba(233, 59, 61, 0.2);
+  border-radius: 15px;
+  padding: 0 15px;
+}
+.xyhfl > div {
+  display: flex;
+  justify-content: space-between;
+}
+.xyhfl > div > div:first-child > img:first-child {
+  transform: rotate(180deg);
+}
+.xyhfl > div > div:first-child > img {
+  width: 12px;
+  height: 17px;
+}
+.xyhfl {
+  background: #fff;
+  padding: 1rem 0.6rem;
+  margin-top: 1.3rem;
+}
+.xyhfl > div > div:first-child {
+  display: flex;
+  align-items: center;
+}
 /* 为你推荐 */
 .wntj_img {
   display: block;
@@ -254,8 +441,7 @@ export default {
   position: absolute;
   bottom: 0;
   left: 50%;
-  margin-left: -48px;
-  margin-bottom: -8px;
+  transform: translate(-50%, 50%);
   z-index: 2;
   font-size: 0.8rem;
   color: #999;
@@ -269,14 +455,14 @@ export default {
   border-bottom: 1px solid #eee;
   margin-bottom: 0.5rem;
 }
-.nologin > div:nth-child(2) {
+.cartnull {
   padding: 4.2rem;
 }
-.nologin > div:nth-child(2) > img {
+.cartnull > img {
   width: 90px;
   height: 90px;
 }
-.nologin > div:first-child button {
+.pleasel button {
   outline: none;
   border: none;
   background: #f2140c;
@@ -285,7 +471,7 @@ export default {
   border-radius: 0.3rem;
   margin-left: 0.5rem;
 }
-.nologin > div:first-child {
+.pleasel {
   font-size: 0.9rem;
   background: #fff;
   padding: 0.9rem;
@@ -348,7 +534,6 @@ export default {
   position: relative;
   width: 20px;
   height: 20px;
-  color: #fff;
 }
 .selectall > span,
 .selected > span {
@@ -358,7 +543,7 @@ export default {
   display: block;
   width: 20px;
   height: 20px;
-  background: url("../assets/jd-sprites.png") no-repeat;
+  background: url("../assets/jd-sprites.png") #fff no-repeat;
   background-size: 200px 200px;
   background-position-x: -179px;
   background-position-y: -89px;
@@ -408,7 +593,7 @@ input[type="checkbox"] {
 .num {
   margin: 0;
   padding: 0;
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   font-size: 14px;
   -webkit-appearance: none;
   border: none;

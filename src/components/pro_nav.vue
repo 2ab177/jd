@@ -19,7 +19,7 @@
 import {
   GoodsAction,
   GoodsActionIcon,
-  GoodsActionButton,Dialog, Toast
+  GoodsActionButton
 } from 'vant';
 export default {
   data(){
@@ -29,9 +29,9 @@ export default {
   },
   props:['title','price','simg','lid'],
   methods: {
-    Toast,
     addcart() {
       if(this.cclick){
+        //函数节流
         this.cclick=false;
         this.axios.get('/cart/addcart',{
           params:{
@@ -42,14 +42,22 @@ export default {
           }
         })
         .then(res=>{
-          if(res.data.status===403){
-            Dialog.alert({
+          if(res.data.status===403&&this.$store.getters.getLogin){
+            this.$store.commit('loginout');
+           this.Dialog.alert({
+                title:'身份信息过期',
+                message: "请重新登录"
+              }).then(() => {
+                this.$router.push('/login');
+              })
+          }else if(res.data.status===403){
+               this.Dialog.alert({
                 message: "请先登录"
               }).then(() => {
                 this.$router.push('/login');
               })
           }else{
-            Toast('添加成功');
+            this.Toast('添加成功');
             this.cclick=true;
           }
         })
@@ -60,7 +68,6 @@ export default {
     'van-goods-action':GoodsAction,
     'van-goods-action-icon':GoodsActionIcon,
     'van-goods-action-button':GoodsActionButton,
-    [Dialog.Component.name]: Dialog.Component
   }
 };
 </script>

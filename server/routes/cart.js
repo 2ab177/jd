@@ -42,7 +42,7 @@ router.get("/addcart", (req, res) => {
 })
 router.get("/carts",(req,res)=>{
 	var uid=req.user.id;
-  var sql ="select price,title,count,simg,ischecked from jd_cart where uid=?";
+  var sql ="select id,price,title,count,simg,ischecked from jd_cart where uid=?";
   pool.query(sql,[uid],(err,result)=>{
     if(err) throw err;
     res.send({ code: 1, msg: "查询成功", data: result });
@@ -84,3 +84,17 @@ router.get("/delitems",(req,res)=>{
   })
 })
 module.exports=router;
+//功能七：加减号,输入数字修改购物车
+router.get("/changec", (req, res) => {
+  var id = req.query.id;
+  var c=req.query.count;
+  var sql = `update jd_cart set count=${c} where id=${id}`;
+  pool.query(sql, (err, result) => {
+    if (err) throw err;
+    if (result.affectedRows > 0) {
+      res.send({ code: 1, msg: "修改成功" });
+    } else {
+      res.send({ code: -1, msg: "修改失败" });
+    }
+  })
+})

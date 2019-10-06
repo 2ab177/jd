@@ -34,8 +34,6 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import { Dialog, Toast } from "vant";
 //引入md5模块对密码进行加密
 import md5 from "md5";
 export default {
@@ -48,12 +46,7 @@ export default {
       remember:false
     };
   },
-  components: {
-    [Dialog.Component.name]: Dialog.Component
-  },
   methods: {
-    Toast,
-    md5,
     back() {
       this.$router.go(-1); //返回上一层
     },
@@ -64,14 +57,14 @@ export default {
       }
       //验证手机格式
       if (!/^1[3-9]\d{9}$/.test(this.uname)) {
-        Dialog.alert({
+        this.Dialog.alert({
           message: "手机号码格式错误"
         });
         return;
       }
       //验证密码格式
       if (!/^[a-zA-Z0-9]{6,12}$/.test(this.upwd)) {
-        Dialog.alert({
+        this.Dialog.alert({
           message: "请输入六至十二位密码，包含数字字母"
         });
         return;
@@ -79,23 +72,23 @@ export default {
       //函数节流
       if (this.cclick) {
         this.cclick=false;
-        Toast.loading({
+        this.Toast.loading({
           mask: true,
           message: "登录中..."
         });
         this.axios
           .post("/login", {
             uname: this.uname,
-            upwd: this.md5(this.upwd),
+            upwd: md5(this.upwd),
             remember:this.remember
           })
           .then(res => {
-            Toast.clear();
+            this.Toast.clear();
             this.cclick=true;
             if (res.data.code == -1) {
-              Toast("账号或密码错误");
+              this.Toast("账号或密码错误");
             } else {
-              Toast("登录成功");
+              this.Toast("登录成功");
               this.$router.push("/");
             }
           });
@@ -132,6 +125,7 @@ export default {
   margin: 1.2rem 0;
 }
 .selectall{
+
   position: relative;
   width: 20px;
   height: 20px;
@@ -143,13 +137,14 @@ export default {
   display: block;
   width: 20px;
   height: 20px;
-  background: url("../assets/jd-sprites.png") no-repeat;
+  background: url("../assets/jd-sprites.png") #f6f6f6 no-repeat;
   background-size: 200px 200px;
   background-position-x: -179px;
   background-position-y: -89px;
   z-index: 0;
 }
 .selectall > input[type="checkbox"]:checked + span::before{
+
   content: "";
   display: block;
   width: 20px;
@@ -164,6 +159,7 @@ export default {
   position: absolute;
 }
 input[type="checkbox"] {
+
   width: 0px;
   height: 0px;
 }

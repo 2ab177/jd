@@ -25,6 +25,7 @@ export default new Router({
       path: "/reg", component: reg},
     {
       path: "/cart", component: cart},
+
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

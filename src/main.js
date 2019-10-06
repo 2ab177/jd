@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from './axios'
-import { Swipe, SwipeItem } from 'vant'
-Vue.use(axios);
-Vue.use(Swipe).use(SwipeItem);
+import { Swipe, SwipeItem, Dialog, Toast } from 'vant'
+Vue.use(axios).use(Swipe).use(SwipeItem);
+Vue.prototype.Dialog = Dialog;
+Vue.prototype.Toast=Toast;
 Vue.config.productionTip = false;
 Vue.directive('focus', {
   inserted: function (el) {

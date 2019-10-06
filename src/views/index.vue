@@ -222,6 +222,7 @@
   </div>
 </template>
 <script>
+
 import carousel from "../components/carousel";
 import jdkb from "../components/jdkb";
 import jdtabber from "../components/index_tabber";
@@ -242,7 +243,7 @@ export default {
   components: {
     carousel,
     jdkb,
-    jdtabber
+    jdtabber,
   },
   created() {
     this.logined();
@@ -334,6 +335,7 @@ export default {
 };
 </script>
 <style scoped>
+
 /* 为你推荐 */
 .wntj_img {
   display: block;

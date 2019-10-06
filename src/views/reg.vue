@@ -54,7 +54,6 @@
 //引入md5模块加密密码
 import md5 from "md5";
 //引入vant弹出框组件
-import { Dialog, Toast } from "vant";
 export default {
   data() {
     return {
@@ -66,8 +65,6 @@ export default {
     };
   },
   methods: {
-    //md5加密方法
-    md5,
     //返回上一页
     back() {
       this.$router.go(-1); //返回上一层
@@ -90,21 +87,21 @@ export default {
       }
       //验证手机格式
       if (!/^1[3-9]\d{9}$/.test(this.uphone)) {
-        Dialog.alert({
+        this.Dialog.alert({
           message: "手机号码格式错误"
         });
         return;
       }
       //验证密码格式
       if (!/^[a-zA-Z0-9]{6,12}$/.test(this.upwd)) {
-        Dialog.alert({
+        this.Dialog.alert({
           message: "密码格式错误"
         });
         return;
       }
       //验证两次密码是否一致
       if (this.upwd !== this.aupwd) {
-        Dialog.alert({
+        this.Dialog.alert({
           message: "两次密码输入不一致"
         });
         return;
@@ -115,12 +112,12 @@ export default {
         this.axios
           .post("/reg", {
             uname: this.uphone,
-            upwd: this.md5(this.upwd)
+            upwd: md5(this.upwd)
           })
           .then(res => {
             if (res.data.code === 1) {
               this.cclick = true;
-              Dialog.alert({
+              this.Dialog.alert({
                 title:'注册成功',
                 message: "点击确定自动登录并返回首页"
               }).then(() => {
@@ -128,7 +125,7 @@ export default {
                 this.axios
                   .post("/login", {
                     uname: this.uphone,
-                    upwd: this.md5(this.upwd),
+                    upwd: md5(this.upwd),
                     remember:'false'
                   })
                   .then(res => {
@@ -138,7 +135,7 @@ export default {
                   });
               });
             } else {
-              Toast("该号码已注册");
+              this.Toast("该号码已注册");
               this.cclick = true;
             }
           });
@@ -160,9 +157,6 @@ export default {
       }, 200);
     }
   },
-  components: {
-    [Dialog.Component.name]: Dialog.Component
-  }
 };
 </script>
 <style scoped>

@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import { Tabbar, TabbarItem, Dialog } from "vant";
+import { Tabbar, TabbarItem } from "vant";
 export default {
   data() {
     return {
@@ -37,17 +37,20 @@ export default {
       if(!this.$store.getters.getLogin){
         return;
       }
-      Dialog.alert({
+      this.Dialog.confirm({
+        title:'注销',
         message: "确定要退出登录吗"
       }).then(() => {
         this.$store.commit('loginout');
-      });
+      })
+      .catch(()=>{
+
+      })
     }
   },
   components: {
     "van-tabbar": Tabbar,
     "van-tabbar-item": TabbarItem,
-    [Dialog.Component.name]: Dialog.Component
   }
 };
 </script>
