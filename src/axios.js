@@ -43,7 +43,6 @@ Axios.interceptors.response.use(
       //alert(res.data.msg+" 请先登录 !");
     }else if(res.data.token){
       if (res.data.remember==="true"){
-        console.log(res.data);
         localStorage.setItem("token",res.data.token);
         store.commit("llogin");
       }else{

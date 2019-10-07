@@ -1,5 +1,15 @@
 <template>
   <div class="login">
+    <!-- 拼图验证 -->
+    <div @click="kgyz" class="divcenter" v-show="ptyz">
+      <div class="puzzle-box">
+        <PuzzleVerification
+          v-show="true"
+          :onSuccess="handleSuccess"
+          blockType="puzzle"
+        />
+      </div>
+    </div>
     <div class="jddl">
       <span @click="back" class="back"></span>
       <p>京东登录</p>
@@ -10,11 +20,11 @@
       <a href>忘记密码</a>
     </div>
     <div class="savelogin">
-        <label class="selectall">
-          <input type="checkbox" v-model="remember"  />
-          <span></span>
-        </label>
-        <span>一小时内免登录</span>
+      <label class="selectall">
+        <input type="checkbox" v-model="remember" />
+        <span></span>
+      </label>
+      <span>一小时内免登录</span>
     </div>
     <button class="btn" @click="login">登录</button>
     <button class="btn">一键登录</button>
@@ -34,6 +44,8 @@
   </div>
 </template>
 <script>
+//引入拼图验证组件
+import PuzzleVerification from "../components/puzzleVerification";
 //引入md5模块对密码进行加密
 import md5 from "md5";
 export default {
@@ -43,10 +55,48 @@ export default {
       upwd: "",
       timer: undefined,
       cclick: true,
-      remember:false
+      remember: false,
+      ptyz:false,
     };
   },
+  components:{
+    PuzzleVerification
+  },
   methods: {
+    kgyz(e){
+      var pt=document.getElementsByClassName('puzzle-box')[0];
+      //点击除验证窗口以外位置关闭
+      if(!pt.contains(e.target)){
+        this.ptyz=false;
+      }
+    },
+    handleSuccess() {
+      //函数节流
+      this.ptyz=false;
+      if (this.cclick) {
+        this.cclick = false;
+        this.Toast.loading({
+          mask: true,
+          message: "登录中..."
+        });
+        this.axios
+          .post("/login", {
+            uname: this.uname,
+            upwd: md5(this.upwd),
+            remember: this.remember
+          })
+          .then(res => {
+            this.Toast.clear();
+            this.cclick = true;
+            if (res.data.code == -1) {
+              this.Toast("账号或密码错误");
+            } else {
+              this.Toast("登录成功");
+              this.$router.push("/");
+            }
+          });
+      }
+    },
     back() {
       this.$router.go(-1); //返回上一层
     },
@@ -69,30 +119,7 @@ export default {
         });
         return;
       }
-      //函数节流
-      if (this.cclick) {
-        this.cclick=false;
-        this.Toast.loading({
-          mask: true,
-          message: "登录中..."
-        });
-        this.axios
-          .post("/login", {
-            uname: this.uname,
-            upwd: md5(this.upwd),
-            remember:this.remember
-          })
-          .then(res => {
-            this.Toast.clear();
-            this.cclick=true;
-            if (res.data.code == -1) {
-              this.Toast("账号或密码错误");
-            } else {
-              this.Toast("登录成功");
-              this.$router.push("/");
-            }
-          });
-      }
+      this.ptyz=true;
     },
     canC() {
       //函数防抖
@@ -113,24 +140,39 @@ export default {
 };
 </script>
 <style scoped>
+/* 拼图验证 */
+.divcenter{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .65);
+    z-index: 999;
+  }
+  .puzzle-box {
+    position: absolute;
+     left: 50%;
+     top: 50%;
+     transform: translate(-50%,-50%);
+  }
 /* 是否记住登录状态 */
-.savelogin>span{
-  margin-left: .6rem;
+.savelogin > span {
+  margin-left: 0.6rem;
 }
-.savelogin{
+.savelogin {
   display: flex;
-  font-size: .9rem;
+  font-size: 0.9rem;
   align-items: center;
   color: #999;
   margin: 1.2rem 0;
 }
-.selectall{
-
+.selectall {
   position: relative;
   width: 20px;
   height: 20px;
 }
-.selectall > span{
+.selectall > span {
   left: 0;
   top: 0;
   position: absolute;
@@ -143,8 +185,7 @@ export default {
   background-position-y: -89px;
   z-index: 0;
 }
-.selectall > input[type="checkbox"]:checked + span::before{
-
+.selectall > input[type="checkbox"]:checked + span::before {
   content: "";
   display: block;
   width: 20px;
@@ -159,7 +200,6 @@ export default {
   position: absolute;
 }
 input[type="checkbox"] {
-
   width: 0px;
   height: 0px;
 }
@@ -277,7 +317,7 @@ input {
   left: 50%;
   top: -0.6rem;
   margin-left: -3.5rem;
-  z-index: 999;
+  z-index: 99;
   padding: 0 0.8rem;
   background: #f6f6f6;
 }

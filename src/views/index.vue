@@ -231,7 +231,6 @@ export default {
     return {
       fixed: false,
       mstime: new Date(),
-      islogin: false,
       miaosha: [],
       mrg: [],
       products: [],
@@ -246,7 +245,6 @@ export default {
     jdtabber,
   },
   created() {
-    this.logined();
     this.gmiaosha();
     this.gmrg();
     window.scrollTo(0,0);
@@ -301,14 +299,6 @@ export default {
       var appTg = document.getElementsByClassName("app_tg")[0];
       appTg.remove();
       window.addEventListener("scroll", this.scroll2);
-    },
-    logined() {
-      if (
-        localStorage.getItem("token") !== "" ||
-        sessionStorage.getItem("token") !== ""
-      ) {
-        this.islogin = true;
-      }
     },
     djs() {
       this.timer = setInterval(() => {
