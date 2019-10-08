@@ -23,7 +23,7 @@ server.use(bodyParser.urlencoded({extended:false}));
 //5.2:每请求是否验证true
 //要实现手机能够访问地址要加上本机ip地址 查看本机ip地址命令ipconfig/all
 server.use(cors({
-  origin: ["http://192.168.1.54:8080","http://127.0.0.1:8080", "http://localhost:8080",],
+  origin: ["http://127.0.0.1:8080", "http://localhost:8080",],
   credentials: true
 }))
 //session一定要在所有请求之前;

@@ -252,38 +252,12 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll); // 监听（绑定）滚轮滚动事件
     this.djs();
-    window.addEventListener("scroll", this.gproducts);
   },
   //销毁页面时移除绑定在window的事件监听
   destroyed() {
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("scroll", this.gproducts);
+    window.removeEventListener("scroll", this.handleScroll || this.scroll2);
   },
   methods: {
-    gproducts() {
-      if (this.pno > 2) {
-        return;
-      }
-      var st = document.documentElement.scrollTop || document.body.scrollTop;
-      var wh = window.innerHeight;
-      var sh = document.body.scrollHeight;
-      //页面到底部时自动加载数据
-      if (this.canc && st + wh >= sh) {
-        //函数节流
-        this.canc = false;
-        this.axios
-          .get("/product", {
-            params: {
-              pno: this.pno
-            }
-          })
-          .then(res => {
-            this.pno += 1;
-            this.products = this.products.concat(res.data.data);
-            this.canc = true;
-          });
-      }
-    },
     gmrg() {
       this.axios.get("/mrg").then(res => {
         this.mrg = res.data;
@@ -306,19 +280,59 @@ export default {
       }, 1000);
     },
     handleScroll() {
-      var sTop = document.documentElement.scrollTop || document.body.scrollTop;
-      if (sTop >= 48) {
+      var st = document.documentElement.scrollTop || document.body.scrollTop;
+      var wh = window.innerHeight;
+      var sh = document.body.scrollHeight-10;
+      if (st >= 48) {
         this.fixed = true;
       } else {
         this.fixed = false;
       }
+      if (this.pno > 2) {
+        return;
+      }
+      if (this.canc && st + wh>=sh) {
+        //函数节流
+        this.canc = false;
+        this.axios
+          .get("/product", {
+            params: {
+              pno: this.pno
+            }
+          })
+          .then(res => {
+            this.pno += 1;
+            this.products = this.products.concat(res.data.data);
+            this.canc = true;
+          });
+      }
     },
     scroll2() {
-      var sTop = document.documentElement.scrollTop || document.body.scrollTop;
-      if (sTop > 0) {
+      var wh = window.innerHeight;
+      var sh = document.body.scrollHeight-10;
+      var st = document.documentElement.scrollTop || document.body.scrollTop;
+      if (st > 0) {
         this.fixed = true;
       } else {
         this.fixed = false;
+      }
+      if (this.pno > 2) {
+        return;
+      }
+      if (this.canc && st + wh>=sh) {
+        //函数节流
+        this.canc = false;
+        this.axios
+          .get("/product", {
+            params: {
+              pno: this.pno
+            }
+          })
+          .then(res => {
+            this.pno += 1;
+            this.products = this.products.concat(res.data.data);
+            this.canc = true;
+          });
       }
     }
   },

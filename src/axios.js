@@ -3,7 +3,7 @@ import qs from "qs";
 import store from './store'
 //要实现手机能够访问地址要加上本机ip地址 查看本机ip地址命令ipconfig/all
 const Axios=axios.create({
-  baseURL:"http://192.168.1.54:5050/",
+  baseURL:"http://127.0.0.1:5050/",
   withCredentials:true
 })
 Axios.interceptors.request.use(
