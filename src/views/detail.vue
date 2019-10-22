@@ -17,13 +17,13 @@
       </div>
       <!-- 轮播图上方导航条 -->
       <div class="pro_nav">
-        <div>
-          <span class="pro_navspan" @click="backnext"></span>
+        <div @click="nav">
+          <span class="pro_navspan" data-to="back"></span>
           <div>
-            <span @click="backtop">商品</span>
-            <span @click="topj">评价</span>
-            <span @click="toxq">详情</span>
-            <span @click="totj">推荐</span>
+            <span  data-to="sp">商品</span>
+            <span data-to="pj">评价</span>
+            <span data-to="xq">详情</span>
+            <span data-to="tj">推荐</span>
           </div>
           <span class="pro_navspan about"></span>
         </div>
@@ -256,14 +256,27 @@ export default {
     apptg
   },
   methods: {
-    totj(){
-      window.scrollTo(0, 2447);
+    backtop(){
+      window.scrollTo(0, 0);
     },
-    toxq(){
-      window.scrollTo(0, 1380);
-    },
-    topj(){
-      window.scrollTo(0, 928);
+    nav(e){
+      var to=e.target.dataset.to;
+      switch (to){
+        case "sp":
+        window.scrollTo(0, 0);
+        break;
+        case "pj":
+        window.scrollTo(0, 928);
+        break;
+        case "xq":
+        window.scrollTo(0, 1380);
+        break;
+        case "back":
+        this.$router.go(-1);
+        break;
+        default:
+        window.scrollTo(0, 2447);
+      }
     },
     topnav() {
       var nd = document.querySelector(".pro_nav>div>div");
@@ -338,12 +351,6 @@ export default {
           this.xp = xp;
         });
     },
-    backtop() {
-      window.scrollTo(0, 0);
-    },
-    backnext() {
-      this.$router.go(-1);
-    }
   }
 };
 </script>
