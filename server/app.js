@@ -154,7 +154,7 @@ server.get('/search', (req, res) => {
   if (!ps) {
     ps = 4;
   }
-  var sql = `select title,price,vipprice,smproimg from jd_product where ${where} limit ?,?`;
+  var sql = `select lid,title,price,vipprice,smproimg from jd_product where ${where} limit ?,?`;
   var offset = (pno - 1) * ps;//起始记录数 ?
   ps = parseInt(ps);      //行数       ?
   pool.query(sql, [offset, ps], (err, result) => {

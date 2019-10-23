@@ -18,7 +18,7 @@
         <span>有货优先</span>
         <span>筛选</span>
       </div>
-      <div class="pro_list">
+      <div class="pro_list" @click="todetail">
         <div class="pro_item" v-for="(item,i) of sprolist" :key="i">
           <img :src="require(`../assets/wntj/${item.smproimg}.jpg`)" alt />
           <div>
@@ -40,6 +40,7 @@
               <span></span>
             </div>
           </div>
+          <div :data-lid="item.lid"></div>
         </div>
       </div>
     </div>
@@ -81,6 +82,11 @@ export default {
     this.loadPro();
   },
   methods: {
+    todetail(e){
+      if(e.target.dataset.lid){
+        this.$router.push('/detail'+e.target.dataset.lid);
+      }
+    },
     loadPro() {
       if (this.$route.params.kw&&this.canClick) {
         this.canClick=false;
@@ -105,6 +111,14 @@ export default {
 };
 </script>
 <style scoped>
+.pro_item>div:last-child{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
 /* 搜索推荐 */
 .nofound>p:nth-child(2){
   margin-top: .6rem;
@@ -177,6 +191,7 @@ export default {
   font-size: 0.7rem;
 }
 .pro_item {
+  position: relative;
   display: flex;
   padding: 0.6rem;
 }

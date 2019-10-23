@@ -274,8 +274,11 @@ export default {
         case "back":
         this.$router.go(-1);
         break;
-        default:
+        case "tj":
         window.scrollTo(0, 2447);
+        break;
+        default:
+        break
       }
     },
     topnav() {
