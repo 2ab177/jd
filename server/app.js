@@ -135,6 +135,34 @@ server.get('/miaosha', (req, res) => {
     res.send(result);
   });
 })
+server.get('/search', (req, res) => {
+  //2:接收客户请求数据 
+  //  pno 页码   pageSize 页大小
+  var kw = req.query.kw;
+  var kws = kw.split(" ");
+  var pno = req.query.pno;
+  var ps = req.query.pageSize;
+  kws.forEach((elem, i, arr) => {
+    arr[i] = `title like '%${elem}%'`;
+  })
+  var where = kws.join(" and ");
+  //3:如果客户没有请示数据设置默认数据
+  //  pno=1     pageSize=4
+  if (!pno) {
+    pno = 1;
+  }
+  if (!ps) {
+    ps = 4;
+  }
+  var sql = `select title,price,vipprice,smproimg from jd_product where ${where} limit ?,?`;
+  var offset = (pno - 1) * ps;//起始记录数 ?
+  ps = parseInt(ps);      //行数       ?
+  pool.query(sql, [offset, ps], (err, result) => {
+    //6:获取返回结果发送客户端
+    if (err) throw err;
+    res.send(result);
+  });
+})
 server.get("/product", (req, res) => {
   //2:接收客户请求数据 
   //  pno 页码   pageSize 页大小

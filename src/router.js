@@ -6,10 +6,12 @@ const search = () => import('@/views/search.vue')
 const detail = () => import('@/views/detail.vue')
 const reg = () => import('@/views/reg.vue')
 const cart = () => import('@/views/cart.vue')
+const products = () => import('@/views/product.vue')
 Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    { path: "/products:kw", component: products, props: true},
     {
       path: "/login", component: login, name: 'login'},
     {
