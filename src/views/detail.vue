@@ -263,13 +263,13 @@ export default {
         window.scrollTo(0, 928);
         break;
         case "xq":
-        window.scrollTo(0, 1381);
+        window.scrollTo(0, 1382);
         break;
         case "back":
         this.$router.go(-1);
         break;
         case "tj":
-        window.scrollTo(0, 2447);
+        window.scrollTo(0, 2448);
         break;
         default:
         break
@@ -277,11 +277,7 @@ export default {
     },
     topnav() {
       var st=document.documentElement.scrollTop || document.body.scrollTop;
-      st <=48&&(this.st=0)
-      st >=48&&st<=927&&(this.st=48)
-      st >=928&&st<=1380&&(this.st=928)
-      st >=1381&&st<=2446&&(this.st=1381)
-      st>=2447&&(this.st=2447)
+      this.st=st;
     },
     loadDetail() {
       this.axios
