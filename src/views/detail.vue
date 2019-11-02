@@ -3,29 +3,29 @@
     <!-- 返回顶部 -->
     <div @click="backtop" class="backtop"></div>
     <!-- 商品导航 -->
-    <pronav :title="title" :price="price" :simg="simg" :lid="lid" />
+    <pronav :title="productData.title" :price="productData.price" :simg="productData.smproimg" :lid="productData.lid" />
     <!-- 顶部app推广 -->
     <apptg />
     <!-- 商品轮播图 -->
     <div class="pro_carousel">
       <div class="carousel">
         <van-swipe indicator-color="#e4393c">
-          <van-swipe-item v-for="(item,i) of carimgs" :key="i">
+          <van-swipe-item v-for="(item,i) of productData.carimg" :key="i">
             <img :src="require(`../assets/shangpin/${item}.jpg`)" alt />
           </van-swipe-item>
         </van-swipe>
       </div>
       <!-- 轮播图上方导航条 -->
-      <div class="pro_nav">
+      <div class="pro_nav" :style="st>=48?'position:fixed;background:#fff':''">
         <div @click="nav">
-          <span class="pro_navspan" data-to="back"></span>
-          <div>
-            <span  data-to="sp">商品</span>
-            <span data-to="pj">评价</span>
-            <span data-to="xq">详情</span>
-            <span data-to="tj">推荐</span>
+          <span class="pro_navspan" data-to="back" :class="{s1:st>=48}"></span>
+          <div :style="st>=48?'display:flex':''">
+            <span  data-to="sp" :style="st >=48&&st<=927?'color:#e4393c':'color:#333'">商品</span>
+            <span data-to="pj" :style="st>=928&&st<=1380?'color:#e4393c':'color:#333'">评价</span>
+            <span data-to="xq" :style="st>=1381&&st<=2446?'color:#e4393c':'color:#333'">详情</span>
+            <span data-to="tj" :style="st>=2447?'color:#e4393c':'color:#333'">推荐</span>
           </div>
-          <span class="pro_navspan about"></span>
+          <span class="pro_navspan about" :class="{s2:st>=48}"></span>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
       <div class="price">
         <div class="price_detail">
           <span>￥</span>
-          <span>{{price.toFixed(2)}}</span>
+          <span>{{productData.price.toFixed(2)}}</span>
         </div>
         <div>
           <div>
@@ -51,10 +51,10 @@
       <!-- 商品标题 -->
       <div class="title">
         <img class="title_icon1" src="../assets/zy2.png" alt />
-        <span>{{title}}</span>
+        <span>{{productData.title}}</span>
       </div>
       <div class="title_detail">
-        <span>{{prodetail}}</span>
+        <span>{{productData.details}}</span>
         <span class="more_detail">查看&gt;</span>
       </div>
     </div>
@@ -92,7 +92,7 @@
       <div>
         <span>已选</span>
         <div>
-          <p>{{guige}}</p>
+          <p>{{productData.guige}}</p>
           <p>本商品支持保障服务,京东服务,点击可选服务</p>
         </div>
         <span></span>
@@ -173,9 +173,9 @@
       <div class="ar_detail">
         <div class="ar_juti">
           <div>
-            <span v-for="(item,i) of jp" :key="i">{{item}}</span>
+            <span v-for="(item,i) of productData.jianping" :key="i">{{item}}</span>
           </div>
-          <div v-for="(item,i) of xp" :key="i" class="ardetail">
+          <div v-for="(item,i) of productData.xiangping" :key="i" class="ardetail">
             <div>
               <div>
                 <img src="../assets/user.png" alt />
@@ -213,7 +213,7 @@
         <span>售后保障</span>
       </div>
       <img
-        v-for="(item,i) of detimgs"
+        v-for="(item,i) of productData.xiangimg"
         :key="i"
         :src="require(`../assets/shangpin/${item}.jpg`)"
         alt
@@ -228,16 +228,10 @@ export default {
   data() {
     return {
       mdtime: new Date(),
-      guige: "",
-      price: 0,
-      title: "",
-      prodetail: "",
-      carimgs: [],
-      detimgs: [],
-      jp: [],
-      xp: [],
-      simg:"",
-      lid:""
+      productData:{
+        price:0
+      },
+      st:0
     };
   },
   created() {
@@ -269,7 +263,7 @@ export default {
         window.scrollTo(0, 928);
         break;
         case "xq":
-        window.scrollTo(0, 1380);
+        window.scrollTo(0, 1381);
         break;
         case "back":
         this.$router.go(-1);
@@ -282,53 +276,12 @@ export default {
       }
     },
     topnav() {
-      var nd = document.querySelector(".pro_nav>div>div");
-      var s1 = document.getElementsByClassName("pro_navspan")[0];
-      var s2 = document.getElementsByClassName("about")[0];
-      var fd = document.getElementsByClassName("pro_nav")[0];
-      var st = document.documentElement.scrollTop || document.body.scrollTop;
-      var ss=document.querySelectorAll('.pro_nav>div>div>span');
-      if (st > 48) {
-        fd.style.position = "fixed";
-        nd.style.display = "flex";
-        fd.style.background = "#fff";
-        s1.style.backgroundImage = "url('back_b.png') ";
-        s1.style.backgroundColor = "#fff";
-        s2.style.backgroundImage = "url('threeDianb.png') ";
-        s2.style.backgroundColor = "#fff";
-      } else {
-        fd.style.position = "";
-        nd.style.display = "";
-        fd.style.background = "";
-        s1.style.backgroundImage = "";
-        s1.style.backgroundColor = "";
-        s2.style.backgroundImage = "";
-        s2.style.backgroundColor = "";
-      }
-      if(st>=0&&st<=927){
-        for(var item of ss){
-          item.style.color='#333';
-        }
-        ss[0].style.color='#e4393c';
-      }
-      if(st>=928&&st<=1380){
-        for(var item of ss){
-          item.style.color='#333';
-        }
-        ss[1].style.color='#e4393c';
-      }
-      if(st>=1380&&st<=2446){
-        for(var item of ss){
-          item.style.color='#333';
-        }
-        ss[2].style.color='#e4393c';
-      }
-      if(st>=2447){
-        for(var item of ss){
-          item.style.color='#333';
-        }
-        ss[3].style.color='#e4393c';
-      }
+      var st=document.documentElement.scrollTop || document.body.scrollTop;
+      st <=48&&(this.st=0)
+      st >=48&&st<=927&&(this.st=48)
+      st >=928&&st<=1380&&(this.st=928)
+      st >=1381&&st<=2446&&(this.st=1381)
+      st>=2447&&(this.st=2447)
     },
     loadDetail() {
       this.axios
@@ -338,26 +291,26 @@ export default {
           }
         })
         .then(res => {
-          this.title = res.data[0].title;
-          this.guige = res.data[0].guige;
-          this.prodetail = res.data[0].details;
-          this.price = res.data[0].price;
-          this.simg=res.data[0].smproimg;
-          this.lid=res.data[0].lid;
-          var cs = res.data[0].carimg.split(",");
-          this.carimgs = cs;
-          var jp = res.data[0].jianping.split(",");
-          this.jp = jp;
-          var delimg = res.data[0].xiangimg.split(",");
-          this.detimgs = delimg;
-          var xp = res.data[0].xiangping.split(",");
-          this.xp = xp;
+          res.data[0].carimg = res.data[0].carimg.split(",");
+          res.data[0].jianping = res.data[0].jianping.split(",");
+          res.data[0].xiangimg = res.data[0].xiangimg.split(",");
+          res.data[0].xiangping = res.data[0].xiangping.split(",");
+          this.productData = res.data[0];
+          console.log(res.data[0]);
         });
     },
   }
 };
 </script>
 <style scoped>
+.s1{
+  background-image: url('../../public/back_b.png') !important;
+  background-color: #fff !important;
+}
+.s2{
+  background-image: url('../../public/threeDianb.png') !important;
+  background-color: #fff !important;
+}
 /* 返回顶部 */
 .backtop {
   width: 40px;
