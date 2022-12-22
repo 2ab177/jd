@@ -203,7 +203,7 @@
       "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
       "version": "1.0.0"
     },
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwa": {
       "integrity": "sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==",
       "requires": {
